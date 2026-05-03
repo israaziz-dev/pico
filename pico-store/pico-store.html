@@ -413,6 +413,29 @@ p{ margin:0; }
   display:flex; flex-direction:column; justify-content:flex-end; padding:18px;
   transform: translateZ(120px);
 }
+/* Hover swap: each card holds two images stacked. On stack hover the
+   "A" (default) image fades out and the "B" (alt) image fades in,
+   producing the impression that the two models swap places. */
+.hero-swap .media{ position:relative; }
+.hero-swap .media img{
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  object-fit:cover;
+  display:block;
+  transition: opacity 800ms var(--ease-out), transform 1200ms var(--ease-out), filter 800ms var(--ease-out);
+  will-change: opacity, transform;
+  backface-visibility:hidden;
+}
+.hero-swap__a{ opacity:1; transform:scale(1); z-index:2; }
+.hero-swap__b{ opacity:0; transform:scale(1.06); z-index:1; filter:saturate(.9); }
+.hero__stack:hover .hero-swap__a,
+.hero__stack:focus-within .hero-swap__a{ opacity:0; transform:scale(1.04); filter:saturate(.9); }
+.hero__stack:hover .hero-swap__b,
+.hero__stack:focus-within .hero-swap__b{ opacity:1; transform:scale(1); filter:none; z-index:3; }
+@media (prefers-reduced-motion: reduce){
+  .hero-swap .media img{ transition:none; }
+}
+
 .hero__card--mini h4{ color:var(--pico-gold); font-style:italic; font-size:18px; }
 .hero__card--mini span{ font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:rgba(199,169,109,.7); margin-top:6px; }
 
@@ -1266,14 +1289,16 @@ p{ margin:0; }
           </div>
         </div>
         <div class="hero__stack reveal" id="heroStack" aria-hidden="true">
-          <div class="hero__card hero__card--main">
+          <div class="hero__card hero__card--main hero-swap">
             <div class="media" data-aspect="4-5" data-label="model-1.webp">
-              <img src="./assets/logo/model/model-1.webp" alt="A model wearing a PICO bomber jacket" loading="eager" onerror="this.style.display='none'" />
+              <img class="hero-swap__a" src="./assets/logo/model/model-1.webp" alt="A model wearing a PICO bomber jacket" loading="eager" onerror="this.style.display='none'" />
+              <img class="hero-swap__b" src="./assets/logo/model/model-2.webp" alt="" loading="eager" onerror="this.style.display='none'" />
             </div>
           </div>
-          <div class="hero__card hero__card--side">
+          <div class="hero__card hero__card--side hero-swap">
             <div class="media" data-aspect="3-4" data-label="model-2.webp" style="position:absolute;inset:0;aspect-ratio:auto">
-              <img src="./assets/logo/model/model-2.webp" alt="A model wearing a PICO heritage piece" loading="eager" onerror="this.style.display='none'" />
+              <img class="hero-swap__a" src="./assets/logo/model/model-2.webp" alt="A model wearing a PICO heritage piece" loading="eager" onerror="this.style.display='none'" />
+              <img class="hero-swap__b" src="./assets/logo/model/model-1.webp" alt="" loading="eager" onerror="this.style.display='none'" />
             </div>
           </div>
           <div class="hero__card hero__card--mini">
@@ -2124,6 +2149,12 @@ const PRODUCTS = [
   { id:'patola-tie', name:'Patola Silk Tie', cat:'Tie', category:'Neck Tie', price:7200, img:'./assets/logo/tie/tie-2.webp',
     copy:'Slim Patola tie, double-ikat, hand-finished tip.',
     story:'A small canvas of Patola — geometric, deliberate, unmistakable.' },
+  { id:'kanjivaram-tie', name:'Kanjivaram Silk Tie', cat:'Tie', category:'Neck Tie', price:6800, img:'./assets/logo/tie/tie-3.webp',
+    copy:'A 7-fold tie cut from temple-red Kanjivaram, hand-rolled tip, gold zari at the keeper.',
+    story:'Kanjivaram from Pillaiyar Patti — woven for a wedding in 2003, kept folded in muslin until now.' },
+  { id:'chanderi-tie', name:'Chanderi Silk Tie',    cat:'Tie', category:'Neck Tie', price:5800, img:'./assets/logo/tie/tie-4.webp',
+    copy:'A featherweight tie in pale Chanderi, hand-tipped, finished in habotai.',
+    story:'Chanderi — light as a whisper — folded into a tie that wears like a second skin.' },
   { id:'banaras-tote', name:'Banaras Heritage Tote', cat:'Tote', category:'Tote', price:24500, img:'./assets/logo/tote/tote-2.webp',
     copy:'A roomy day tote in Banarasi brocade, lined in habotai with bridle leather handles.',
     story:'Cut from a deep-burgundy Banarasi sari woven for a wedding in 1979 — preserved at the borders, made for a Tuesday.' },
@@ -2262,33 +2293,22 @@ window.addEventListener('hashchange', setRoute);
    ----------------------------------------------------------------- */
 function renderCategories(){
   const track = $('#catsTrack'); if(!track) return;
-  // Travel distance starts at viewport-width so the first card flies in from the far right edge.
-  // Each successive card has a tighter stagger window for a smooth wave.
-  const vw = Math.max(window.innerWidth, 800);
-  track.innerHTML = CATEGORIES.map((c, i) => {
-    const start = (0.42 + i * 0.038).toFixed(3);
-    const end   = (0.42 + i * 0.038 + 0.34).toFixed(3); // longer window = smoother arrival
-    const dist  = Math.round(vw - i * 60); // first card far right; each subsequent slightly less far
-    return `
-      <a class="cat assemble-piece" href="#/shop?cat=${encodeURIComponent(c.key)}" aria-label="${c.label}"
-         data-from="right" data-start="${start}" data-end="${end}" data-distance="${dist}" data-blur="2" data-rotate="0">
-        <span class="cat__index">${String(i+1).padStart(2,'0')}</span>
-        <div class="media" data-aspect="3-4" data-label="${esc(c.img.split('/').pop())}">
-          <img src="${c.img}" alt="${c.label}" loading="lazy" onerror="this.style.display='none'" />
+  track.innerHTML = CATEGORIES.map((c, i) => `
+    <a class="cat" href="#/shop?cat=${encodeURIComponent(c.key)}" aria-label="${c.label}">
+      <span class="cat__index">${String(i+1).padStart(2,'0')}</span>
+      <div class="media" data-aspect="3-4" data-label="${esc(c.img.split('/').pop())}">
+        <img src="${c.img}" alt="${c.label}" loading="lazy" onerror="this.style.display='none'" />
+      </div>
+      <div class="cat__overlay">
+        <h4>${c.label}</h4>
+        <div class="meta">
+          <small>${c.count || ''}</small>
+          <span class="cta">Explore <span class="arrow"></span></span>
         </div>
-        <div class="cat__overlay">
-          <h4>${c.label}</h4>
-          <div class="meta">
-            <small>${c.count || ''}</small>
-            <span class="cta">Explore <span class="arrow"></span></span>
-          </div>
-        </div>
-      </a>
-    `;
-  }).join('');
+      </div>
+    </a>
+  `).join('');
   setupCatsSlider();
-  // Run scene engine once after render so initial card positions are correct
-  if(typeof updateScrollScenes === 'function') updateScrollScenes();
 }
 
 /* -----------------------------------------------------------------
@@ -2325,35 +2345,42 @@ function setupCatsSlider(){
     if(e.key === 'ArrowLeft') { e.preventDefault(); track.scrollBy({ left: -step(), behavior:'smooth' }); }
   });
 
-  // Pointer drag
-  let dragging = false, startX = 0, startLeft = 0, moved = 0;
+  // Pointer drag — capture pointer only AFTER an actual drag is detected,
+  // so a clean click on a card flows through to its <a> link normally.
+  const DRAG_THRESHOLD = 8;
+  let pressed = false, dragging = false, captured = false, startX = 0, startLeft = 0, moved = 0, downId = 0;
   track.addEventListener('pointerdown', (e) => {
     if(e.pointerType === 'mouse' && e.button !== 0) return;
-    dragging = true; moved = 0;
-    startX = e.clientX; startLeft = track.scrollLeft;
-    track.classList.add('is-dragging');
-    track.setPointerCapture(e.pointerId);
+    pressed = true; dragging = false; captured = false; moved = 0;
+    startX = e.clientX; startLeft = track.scrollLeft; downId = e.pointerId;
   });
   track.addEventListener('pointermove', (e) => {
-    if(!dragging) return;
+    if(!pressed) return;
     const dx = e.clientX - startX;
     moved = Math.max(moved, Math.abs(dx));
-    track.scrollLeft = startLeft - dx;
+    if(!dragging && moved >= DRAG_THRESHOLD){
+      dragging = true;
+      track.classList.add('is-dragging');
+      try{ track.setPointerCapture(downId); captured = true; }catch(_){}
+    }
+    if(dragging){
+      track.scrollLeft = startLeft - dx;
+    }
   });
-  function endDrag(e){
-    if(!dragging) return;
-    dragging = false;
+  function endPress(e){
+    if(!pressed) return;
+    const wasDragging = dragging;
+    pressed = false; dragging = false;
     track.classList.remove('is-dragging');
-    try{ track.releasePointerCapture(e.pointerId); }catch(_){}
-    if(moved > 6){
-      // Suppress the click that follows drag
+    if(captured){ try{ track.releasePointerCapture(downId); }catch(_){} captured = false; }
+    if(wasDragging){
+      // Swallow the click that follows the drag so the user doesn't accidentally navigate.
       const blocker = (ev) => { ev.preventDefault(); ev.stopPropagation(); track.removeEventListener('click', blocker, true); };
       track.addEventListener('click', blocker, true);
     }
   }
-  track.addEventListener('pointerup', endDrag);
-  track.addEventListener('pointercancel', endDrag);
-  track.addEventListener('pointerleave', endDrag);
+  track.addEventListener('pointerup', endPress);
+  track.addEventListener('pointercancel', endPress);
 
   updateProgress();
 }
