@@ -1,0 +1,7 @@
+{
+  "redirects": [
+    { "source": "/", "destination": "/pico-store/pico-store.html", "permanent": false }
+  ],
+  "cleanUrls": false,
+  "trailingSlash": false
+}
