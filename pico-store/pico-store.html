@@ -1410,16 +1410,16 @@ p{ margin:0; }
     <section class="custom-hero scroll-scene" data-scene="custom">
       <div class="container custom-hero__inner">
         <div class="custom-hero__copy">
-          <span class="eyebrow scene-el" data-start=".05" data-end=".20">The Signature Service</span>
+          <span class="eyebrow scene-el" data-start=".05" data-end=".30">The Signature Service</span>
           <h1 style="margin-top:18px; font-size:clamp(36px,5vw,72px)">
-            <span class="h-line" data-start=".10" data-end=".28">Turn a fabric</span>
-            <span class="h-line" data-start=".22" data-end=".42">full of memory</span>
-            <span class="h-line" data-start=".34" data-end=".56">into a <em>modern heirloom.</em></span>
+            <span class="h-line" data-start=".15" data-end=".42">Turn a fabric</span>
+            <span class="h-line" data-start=".30" data-end=".58">full of memory</span>
+            <span class="h-line" data-start=".46" data-end=".76">into a <em>modern heirloom.</em></span>
           </h1>
-          <p class="scene-el" data-start=".48" data-end=".68">
+          <p class="scene-el" data-start=".62" data-end=".88">
             Send us the sari your mother wore at her wedding. The brocade folded inside your grandfather's almirah. We will collect it from your doorstep, study it in the atelier, and reimagine it as a jacket, a sling, a clutch — a piece you'll wear for the next thirty years.
           </p>
-          <div class="hero__cta scene-el" data-start=".60" data-end=".78" style="margin-top:32px">
+          <div class="hero__cta scene-el" data-start=".75" data-end=".98" style="margin-top:32px">
             <a class="btn btn--gold btn--lg" href="#/customize">Begin a Commission <span class="arrow"></span></a>
             <a class="btn btn--ghost btn--lg" href="#/craft" style="color:var(--pico-ivory); border-color:rgba(255,242,227,.5)">How It Works</a>
           </div>
@@ -2180,12 +2180,12 @@ const CATEGORIES = [
   { key:'Windsheeter',  label:'Windsheeters',   img:'./assets/logo/wind-sheeter/wind-1.webp',     count:'8 pieces'  },
   { key:'Sling',        label:'Sling Bags',     img:'./assets/logo/sling-bag/sling-1.webp',      count:'14 pieces' },
   { key:'Clutch',       label:'Clutches',       img:'./assets/logo/clutch/clutch-1.webp',         count:'9 pieces'  },
+  { key:'Tote',         label:'Totes',          img:'./assets/logo/tote/tote-1.webp',             count:'8 pieces'  },
   { key:'Wallet',       label:'Wallets',        img:'./assets/logo/wallet/wallet-1.webp',         count:'11 pieces' },
   { key:'Tie',          label:'Neck Ties',      img:'./assets/logo/tie/tie-1.webp',               count:'7 pieces'  },
   { key:'Scarf',        label:'Silk Scarves',   img:'./assets/logo/scarf/scarf-1.webp',              count:'6 pieces'  },
   { key:'Pocket',       label:'Pocket Squares', img:'./assets/logo/tie/tie-4.webp',               count:'10 pieces' },
   { key:'Cardholder',   label:'Card Holders',   img:'./assets/logo/wallet/wallet-3.webp',         count:'5 pieces'  },
-  { key:'Tote',         label:'Totes',          img:'./assets/logo/tote/tote-1.webp',             count:'8 pieces'  },
 ];
 
 // Mock dashboard data
@@ -2395,7 +2395,6 @@ function productCardHTML(p){
   return `
     <article class="product" data-id="${p.id}">
       <div class="media" data-aspect="3-4" data-label="${esc(p.img.split('/').pop())}">
-        <span class="tag tag--gold product__badge">House Pick</span>
         <img src="${p.img}" alt="${p.name}" loading="lazy" onerror="this.style.display='none'" />
         <div class="product__hover" aria-hidden="true">
           <div class="product__quick">
@@ -3075,10 +3074,15 @@ function _updateScrollScenesNow(){
   const reduced = reducedMotion();
   scenes.forEach(scene => {
     const r = scene.getBoundingClientRect();
-    // p: 0 when section's top hits bottom of viewport, 1 when section's bottom leaves top
-    const total = r.height + vh;
+    // p maps the "section coming into view" phase only:
+    //   p = 0 when the section's top hits the bottom of the viewport
+    //   p = 1 when the whole section is visible (or, if the section is
+    //         taller than the viewport, when its top hits the viewport top).
+    // After p = 1 the animations stay settled; they don't unwind as you
+    // continue scrolling past.
+    const range = Math.max(1, Math.min(vh, r.height));
     const passed = vh - r.top;
-    const p = reduced ? 1 : Math.max(0, Math.min(1, passed / total));
+    const p = reduced ? 1 : Math.max(0, Math.min(1, passed / range));
     scene.style.setProperty('--p', p.toFixed(3));
 
     // Per-element reveal: data-start..data-end window mapped from p -> 0..1
