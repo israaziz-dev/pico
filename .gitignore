@@ -1,0 +1,23 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor / tooling
+.vscode/
+.idea/
+*.swp
+*~
+
+# Local Claude memory / agent state (private)
+.claude/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Env / secrets
+.env
+.env.*
+*.key
+*.pem
+credentials*

@@ -1,0 +1,3281 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#FFF2E3" />
+<title>PICO — Heirlooms in Modern Form</title>
+<meta name="description" content="PICO is a premium heritage-fashion house. We transform artisanal and sentimental fabrics into contemporary luxury jackets, bags, and accessories." />
+
+<!-- Fonts: Clast (display) + Montserrat (UI). Cormorant Garamond is used as a tasteful stand-in for Clast where Clast is unavailable. -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+<style>
+/* ================================================================
+   PICO — DESIGN SYSTEM
+   Single-source-of-truth tokens. Edit values here to retheme.
+   ================================================================ */
+:root{
+  /* Brand */
+  --pico-ivory:        #FFF2E3;   /* Primary background */
+  --pico-maroon:       #581919;   /* CTA / strong emphasis */
+  --pico-gold:         #C7A96D;   /* Highlights / luxury accents */
+
+  /* Neutrals */
+  --pico-white:        #FFFFFF;
+  --pico-ink:          #171717;
+  --pico-mute:         #6B6B6B;
+
+  /* Derived surfaces */
+  --pico-ivory-2:      #F7E8D4;   /* slightly deeper ivory for layering */
+  --pico-ivory-3:      #EFDFC8;
+  --pico-line:         rgba(23,23,23,.12);
+  --pico-line-soft:    rgba(23,23,23,.06);
+  --pico-shadow-sm:    0 1px 2px rgba(23,23,23,.06);
+  --pico-shadow-md:    0 8px 24px rgba(23,23,23,.08);
+  --pico-shadow-lg:    0 24px 60px rgba(23,23,23,.14);
+
+  /* Typography */
+  --font-display: "Clast", "Cormorant Garamond", "Didot", "Times New Roman", serif;
+  --font-ui:      "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  /* Spacing (8px base, editorial generosity) */
+  --s-1: 4px;  --s-2: 8px;  --s-3: 12px; --s-4: 16px;
+  --s-5: 24px; --s-6: 32px; --s-7: 48px; --s-8: 64px;
+  --s-9: 96px; --s-10: 128px;
+
+  /* Radii — restrained, no over-rounded */
+  --r-1: 2px;  --r-2: 4px;  --r-3: 8px;
+
+  /* Layout */
+  --container: 1320px;
+  --rail: clamp(20px, 4vw, 56px);
+
+  /* Motion */
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --ease-out: cubic-bezier(.16,1,.3,1);
+  --t-fast: 180ms;
+  --t-med:  360ms;
+  --t-slow: 720ms;
+}
+
+/* ================================================================
+   BASE
+   ================================================================ */
+*,*::before,*::after{ box-sizing:border-box; }
+html,body{ margin:0; padding:0; }
+html{ scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
+body{
+  background:var(--pico-ivory);
+  color:var(--pico-ink);
+  font-family:var(--font-ui);
+  font-weight:400;
+  font-size:15px;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  overflow-x:clip;
+}
+img{ max-width:100%; display:block; }
+a{ color:inherit; text-decoration:none; }
+button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; }
+input,textarea,select{ font:inherit; color:inherit; }
+::selection{ background:var(--pico-maroon); color:var(--pico-ivory); }
+
+/* Display headings */
+h1,h2,h3,h4{
+  font-family:var(--font-display);
+  font-weight:500;
+  letter-spacing:-.01em;
+  line-height:1.05;
+  margin:0;
+  color:var(--pico-ink);
+}
+h1{ font-size:clamp(40px, 7vw, 104px); font-weight:400; letter-spacing:-.02em; }
+h2{ font-size:clamp(28px, 4vw, 56px); }
+h3{ font-size:clamp(22px, 2.4vw, 32px); }
+h4{ font-size:clamp(18px, 1.6vw, 22px); }
+p{ margin:0; }
+
+.eyebrow{
+  font-family:var(--font-ui);
+  font-size:11px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  font-weight:500;
+  color:var(--pico-maroon);
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+}
+.eyebrow::before{
+  content:"";
+  width:28px;
+  height:1px;
+  background:var(--pico-gold);
+  display:inline-block;
+}
+.lead{ font-family:var(--font-display); font-size:clamp(18px,1.6vw,22px); line-height:1.45; color:var(--pico-ink); font-weight:400; }
+.muted{ color:var(--pico-mute); }
+.gold{ color:var(--pico-gold); }
+.maroon{ color:var(--pico-maroon); }
+
+.container{
+  max-width:var(--container);
+  margin:0 auto;
+  padding:0 var(--rail);
+}
+.section{ padding:var(--s-9) 0; position:relative; }
+.section--tight{ padding:var(--s-8) 0; }
+.divider{ height:1px; background:var(--pico-line); }
+.divider--gold{ height:1px; background:var(--pico-gold); opacity:.6; }
+
+/* Buttons */
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  height:52px;
+  padding:0 26px;
+  border-radius:var(--r-1);
+  font-family:var(--font-ui);
+  font-size:12px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  font-weight:500;
+  transition:transform var(--t-fast) var(--ease), background var(--t-fast) var(--ease), color var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease);
+  cursor:pointer;
+  border:1px solid transparent;
+  white-space:nowrap;
+}
+.btn:focus-visible{ outline:2px solid var(--pico-gold); outline-offset:3px; }
+.btn--primary{ background:var(--pico-maroon); color:var(--pico-gold); }
+.btn--primary:hover{ background:#3f1010; }
+.btn--ghost{ background:transparent; color:var(--pico-ink); border-color:var(--pico-ink); }
+.btn--ghost:hover{ background:var(--pico-ink); color:var(--pico-ivory); }
+.btn--gold{ background:var(--pico-gold); color:var(--pico-maroon); }
+.btn--gold:hover{ background:#b39556; }
+.btn--ink{ background:var(--pico-ink); color:var(--pico-ivory); }
+.btn--ink:hover{ background:#000; }
+.btn--block{ width:100%; }
+.btn--sm{ height:40px; padding:0 18px; font-size:11px; letter-spacing:.16em; }
+.btn--lg{ height:60px; padding:0 32px; }
+.btn .arrow{ width:14px; height:1px; background:currentColor; position:relative; }
+.btn .arrow::after{ content:""; position:absolute; right:-1px; top:-3px; width:7px; height:7px; border-right:1px solid currentColor; border-top:1px solid currentColor; transform:rotate(45deg); }
+
+/* Form controls */
+.field{ display:flex; flex-direction:column; gap:8px; }
+.field > label{
+  font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--pico-mute); font-weight:500;
+}
+.input,.textarea,.select{
+  appearance:none;
+  background:transparent;
+  border:1px solid var(--pico-line);
+  border-bottom:1px solid var(--pico-ink);
+  border-top:0; border-left:0; border-right:0;
+  height:48px;
+  padding:0 4px;
+  border-radius:0;
+  color:var(--pico-ink);
+  transition:border-color var(--t-fast) var(--ease);
+}
+.textarea{ height:auto; min-height:120px; padding:14px 4px; resize:vertical; line-height:1.5; }
+.input:focus,.textarea:focus,.select:focus{ outline:none; border-bottom-color:var(--pico-maroon); }
+.select{ background-image:linear-gradient(45deg, transparent 50%, var(--pico-ink) 50%), linear-gradient(135deg, var(--pico-ink) 50%, transparent 50%); background-position: calc(100% - 14px) 22px, calc(100% - 8px) 22px; background-size:6px 6px; background-repeat:no-repeat; padding-right:32px; }
+
+.checkbox,.radio{ display:inline-flex; gap:10px; align-items:center; cursor:pointer; user-select:none; font-size:13px; }
+.checkbox input,.radio input{ position:absolute; opacity:0; pointer-events:none; }
+.checkbox .box,.radio .box{
+  width:18px; height:18px; border:1px solid var(--pico-ink); display:inline-flex; align-items:center; justify-content:center; flex-shrink:0;
+}
+.radio .box{ border-radius:50%; }
+.checkbox input:checked + .box{ background:var(--pico-maroon); border-color:var(--pico-maroon); }
+.checkbox input:checked + .box::after{ content:""; width:5px; height:9px; border-right:2px solid var(--pico-gold); border-bottom:2px solid var(--pico-gold); transform:rotate(45deg) translate(-1px,-1px); }
+.radio input:checked + .box{ background:radial-gradient(circle, var(--pico-maroon) 40%, transparent 42%); border-color:var(--pico-maroon); }
+
+/* Tag / badge */
+.tag{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:6px 10px;
+  font-family:var(--font-ui);
+  font-size:10px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  border:1px solid var(--pico-line);
+  background:var(--pico-white);
+  color:var(--pico-ink);
+}
+.tag--gold{ border-color:var(--pico-gold); color:var(--pico-maroon); }
+.tag--maroon{ background:var(--pico-maroon); color:var(--pico-gold); border-color:var(--pico-maroon); }
+.tag--ink{ background:var(--pico-ink); color:var(--pico-ivory); border-color:var(--pico-ink); }
+
+/* Image placeholder system: an <img> sits over a CSS layer so missing images still look intentional. */
+.media{
+  position:relative;
+  background:linear-gradient(135deg, var(--pico-ivory-2), var(--pico-ivory-3));
+  overflow:hidden;
+  isolation:isolate;
+}
+.media::before{
+  content:""; position:absolute; inset:0; z-index:0;
+  background:
+    radial-gradient(60% 80% at 30% 20%, rgba(199,169,109,.30), transparent 60%),
+    radial-gradient(60% 80% at 80% 90%, rgba(88,25,25,.18), transparent 60%);
+  pointer-events:none;
+}
+.media::after{
+  content:attr(data-label);
+  position:absolute; left:14px; bottom:12px; z-index:0;
+  font-family:var(--font-display); font-style:italic; color:var(--pico-mute); font-size:13px;
+}
+.media > img{
+  position:relative; z-index:1;
+  width:100%; height:100%; object-fit:cover; display:block;
+  transition:transform var(--t-slow) var(--ease-out);
+}
+.media[data-aspect="3-4"]{ aspect-ratio:3/4; }
+.media[data-aspect="4-5"]{ aspect-ratio:4/5; }
+.media[data-aspect="1-1"]{ aspect-ratio:1/1; }
+.media[data-aspect="16-9"]{ aspect-ratio:16/9; }
+.media[data-aspect="2-3"]{ aspect-ratio:2/3; }
+
+/* Card */
+.card{
+  background:var(--pico-white);
+  border:1px solid var(--pico-line-soft);
+  transition:transform var(--t-med) var(--ease), box-shadow var(--t-med) var(--ease);
+}
+.card:hover{ transform:translateY(-4px); box-shadow:var(--pico-shadow-md); }
+
+/* Reveal on scroll */
+.reveal{ opacity:0; transform:translateY(24px); transition:opacity var(--t-slow) var(--ease-out), transform var(--t-slow) var(--ease-out); will-change:opacity, transform; }
+.reveal.is-in{ opacity:1; transform:none; }
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; }
+  html{ scroll-behavior:auto; }
+  .reveal{ opacity:1; transform:none; }
+}
+
+/* ================================================================
+   HEADER / NAV
+   ================================================================ */
+.site-header{
+  position:fixed; inset:0 0 auto 0; z-index:50;
+  display:flex; align-items:center;
+  height:78px;
+  background:rgba(255,242,227,.78);
+  backdrop-filter:saturate(140%) blur(10px);
+  -webkit-backdrop-filter:saturate(140%) blur(10px);
+  border-bottom:1px solid transparent;
+  transition:border-color var(--t-med) var(--ease), background var(--t-med) var(--ease);
+}
+.site-header.is-scrolled{ border-color:var(--pico-line); background:rgba(255,242,227,.92); }
+.site-header__inner{
+  width:100%; max-width:var(--container); margin:0 auto; padding:0 var(--rail);
+  display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:24px;
+}
+.brand-mark{ display:inline-flex; align-items:center; gap:10px; }
+.brand-mark__img{
+  display:block;
+  height:54px;
+  width:auto;
+  object-fit:contain;
+  user-select:none;
+  -webkit-user-drag:none;
+}
+.brand-mark__img.is-failed{ display:none; }
+.brand-mark__img.is-failed + .brand-mark__logo{ display:inline-block; }
+.brand-mark__logo{
+  font-family:var(--font-display);
+  font-size:30px;
+  font-weight:500;
+  letter-spacing:.22em;
+  color:var(--pico-maroon);
+  display:none;
+}
+/* Footer / dark surface variant: tint the maroon mark gold via filter */
+.brand-mark--gold .brand-mark__img{
+  filter: brightness(0) invert(72%) sepia(36%) saturate(388%) hue-rotate(8deg) brightness(91%) contrast(86%);
+}
+.brand-mark--gold .brand-mark__logo{ color:var(--pico-gold); }
+.brand-mark__dot{ width:6px; height:6px; background:var(--pico-gold); border-radius:50%; }
+.nav{ display:flex; gap:28px; justify-content:center; }
+.nav a{
+  font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--pico-ink);
+  position:relative; padding:8px 0;
+  transition:color var(--t-fast) var(--ease);
+}
+.nav a:hover{ color:var(--pico-maroon); }
+.nav a.is-active{ color:var(--pico-maroon); }
+.nav a.is-active::after{ content:""; position:absolute; left:0; right:0; bottom:0; height:1px; background:var(--pico-gold); }
+.header-actions{ display:flex; gap:8px; justify-content:flex-end; align-items:center; }
+.icon-btn{
+  width:42px; height:42px; display:inline-flex; align-items:center; justify-content:center;
+  border-radius:50%; transition:background var(--t-fast) var(--ease);
+  position:relative;
+}
+.icon-btn:hover{ background:var(--pico-ivory-2); }
+.icon-btn svg{ width:18px; height:18px; stroke:var(--pico-ink); fill:none; stroke-width:1.4; }
+.cart-count{
+  position:absolute; top:4px; right:4px;
+  min-width:16px; height:16px; padding:0 4px;
+  border-radius:10px; background:var(--pico-maroon); color:var(--pico-gold);
+  font-size:9px; font-weight:600; display:none; align-items:center; justify-content:center;
+}
+.cart-count.is-on{ display:inline-flex; }
+
+.menu-toggle{ display:none; }
+@media (max-width:880px){
+  .site-header__inner{ grid-template-columns:auto 1fr auto; }
+  .nav{ display:none; }
+  .menu-toggle{ display:inline-flex; }
+}
+.mobile-nav{
+  position:fixed; inset:78px 0 0 0; z-index:49;
+  background:var(--pico-ivory);
+  transform:translateY(-101%); transition:transform var(--t-med) var(--ease);
+  padding:32px var(--rail);
+  border-top:1px solid var(--pico-line);
+}
+.mobile-nav.is-open{ transform:translateY(0); }
+.mobile-nav a{ display:block; padding:18px 0; border-bottom:1px solid var(--pico-line-soft); font-size:14px; letter-spacing:.18em; text-transform:uppercase; }
+
+/* ================================================================
+   ROUTING
+   ================================================================ */
+.view{ display:none; padding-top:78px; }
+.view.is-active{ display:block; }
+
+/* ================================================================
+   HERO
+   ================================================================ */
+.hero{
+  position:relative;
+  min-height: clamp(520px, 76vh, 780px);
+  padding:88px 0 28px;
+  overflow:hidden;
+}
+.hero__bg{
+  position:absolute; inset:0; z-index:0;
+  background:
+    radial-gradient(70% 60% at 80% 20%, rgba(199,169,109,.18), transparent 60%),
+    radial-gradient(60% 50% at 10% 80%, rgba(88,25,25,.16), transparent 60%),
+    var(--pico-ivory);
+}
+.hero__inner{
+  position:relative; z-index:1;
+  display:grid; grid-template-columns: 1fr 1.05fr; gap:48px;
+  align-items:center;
+}
+@media (max-width:980px){ .hero__inner{ grid-template-columns:1fr; gap:40px; } }
+.hero__copy h1{ font-style:italic; font-weight:400; font-size:clamp(36px, 5.6vw, 84px); line-height:1.02; }
+.hero__copy h1 em{ font-style:normal; color:var(--pico-maroon); }
+.hero__copy h1 .ampersand{ font-family:var(--font-display); color:var(--pico-gold); font-style:italic; }
+.hero__copy p.lead{ max-width:54ch; margin-top:14px; color:var(--pico-ink); font-size:clamp(15px,1.3vw,18px); }
+.hero__cta{ display:flex; gap:12px; margin-top:22px; flex-wrap:wrap; }
+.hero__meta{ display:flex; gap:28px; margin-top:24px; }
+.hero__meta-item{ display:flex; flex-direction:column; gap:4px; min-width:0; }
+.hero__meta-item strong{ font-family:var(--font-display); font-size:26px; color:var(--pico-maroon); font-weight:500; }
+.hero__meta-item span{ font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--pico-mute); }
+
+/* Hero stack — layered cards with parallax */
+.hero__stack{
+  position:relative; height:clamp(460px, 64vh, 640px);
+  perspective:1400px; transform-style:preserve-3d;
+}
+.hero__card{
+  position:absolute; overflow:hidden;
+  border:1px solid var(--pico-line-soft);
+  background:var(--pico-white);
+  box-shadow:var(--pico-shadow-lg);
+  transition:transform var(--t-slow) var(--ease-out);
+  will-change:transform;
+}
+.hero__card--main{
+  inset:0 40px 50px 0; transform: translateZ(40px);
+}
+.hero__card--side{
+  width:54%; aspect-ratio:3/4; right:0; bottom:0;
+  transform: translateZ(80px) translateY(24px);
+  border:1px solid var(--pico-gold);
+}
+.hero__card--mini{
+  width:30%; left:-20px; top:48px;
+  aspect-ratio:1/1;
+  background:var(--pico-maroon);
+  color:var(--pico-gold);
+  display:flex; flex-direction:column; justify-content:flex-end; padding:18px;
+  transform: translateZ(120px);
+}
+.hero__card--mini h4{ color:var(--pico-gold); font-style:italic; font-size:18px; }
+.hero__card--mini span{ font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:rgba(199,169,109,.7); margin-top:6px; }
+
+@media (max-width:560px){
+  .hero{ padding-top:96px; }
+  .hero__stack{ height:440px; }
+  .hero__card--mini{ width:38%; }
+}
+
+/* Marquee */
+.marquee{
+  border-top:1px solid var(--pico-line);
+  border-bottom:1px solid var(--pico-line);
+  background:var(--pico-ivory-2);
+  overflow:hidden;
+}
+.marquee__track{
+  display:flex; gap:60px;
+  padding:14px 0;
+  animation:marquee 18s linear infinite;
+  white-space:nowrap;
+}
+.marquee__item{
+  font-family:var(--font-display); font-style:italic; font-size:18px; color:var(--pico-ink);
+  display:inline-flex; align-items:center; gap:14px;
+}
+.marquee__item span{ width:6px; height:6px; background:var(--pico-gold); border-radius:50%; }
+@keyframes marquee{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
+@media (prefers-reduced-motion: reduce){ .marquee__track{ animation:none; } }
+
+/* ================================================================
+   EDITORIAL INTRO
+   ================================================================ */
+.editorial{ display:grid; grid-template-columns: 1fr 1fr; gap:80px; align-items:center; }
+@media (max-width:880px){ .editorial{ grid-template-columns:1fr; gap:48px; } }
+.editorial__copy h2{ font-style:italic; }
+.editorial__copy h2 em{ font-style:normal; color:var(--pico-maroon); }
+.editorial__copy p{ margin-top:24px; max-width:56ch; color:var(--pico-ink); }
+.editorial__media{ position:relative; }
+.editorial__media .media{ aspect-ratio:4/5; }
+.editorial__media .badge{
+  position:absolute; left:-24px; top:24px; z-index:2;
+  background:var(--pico-maroon); color:var(--pico-gold);
+  padding:14px 18px;
+  border:1px solid var(--pico-gold);
+  font-family:var(--font-display); font-style:italic; font-size:18px;
+}
+
+/* ================================================================
+   FEATURED CATEGORIES — horizontal slider
+   ================================================================ */
+.cats-section{ overflow:hidden; }
+.cats-controls{
+  display:flex; align-items:center; gap:24px; margin-top:18px; flex-wrap:wrap;
+}
+.cats-controls__link{
+  display:inline-flex; gap:8px; align-items:center; color:var(--pico-maroon); font-size:11px; letter-spacing:.2em; text-transform:uppercase; border-bottom:1px solid var(--pico-gold); padding-bottom:4px;
+  margin-top:0 !important;
+}
+.cats-nav{ display:flex; gap:8px; }
+.cats-nav__btn{
+  width:46px; height:46px; border:1px solid var(--pico-line); border-radius:50%;
+  display:inline-flex; align-items:center; justify-content:center;
+  transition:background var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease), color var(--t-fast) var(--ease), transform var(--t-fast) var(--ease);
+}
+.cats-nav__btn svg{ width:16px; height:16px; stroke:var(--pico-ink); fill:none; stroke-width:1.4; }
+.cats-nav__btn:hover{ background:var(--pico-ink); border-color:var(--pico-ink); }
+.cats-nav__btn:hover svg{ stroke:var(--pico-ivory); }
+.cats-nav__btn:disabled{ opacity:.35; cursor:not-allowed; }
+.cats-nav__btn:disabled:hover{ background:transparent; border-color:var(--pico-line); }
+.cats-nav__btn:disabled:hover svg{ stroke:var(--pico-ink); }
+.cats-nav__btn:focus-visible{ outline:2px solid var(--pico-gold); outline-offset:3px; }
+
+.cats-slider{
+  position:relative;
+  margin-top:48px;
+  padding-left:var(--rail);
+  /* track is allowed to bleed off the right edge for editorial feel */
+}
+.cats-track{
+  display:grid;
+  grid-auto-flow:column;
+  grid-auto-columns: clamp(240px, 22vw, 320px);
+  gap:14px;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  scroll-behavior:smooth;
+  scrollbar-width:none;
+  -ms-overflow-style:none;
+  padding-right:var(--rail);
+  padding-bottom:8px;
+  cursor:grab;
+}
+.cats-track::-webkit-scrollbar{ display:none; }
+.cats-track.is-dragging{ cursor:grabbing; scroll-behavior:auto; }
+.cats-track:focus-visible{ outline:2px solid var(--pico-gold); outline-offset:4px; }
+
+.cat{
+  position:relative; overflow:hidden; aspect-ratio:3/4;
+  border:1px solid var(--pico-line-soft);
+  cursor:pointer;
+  scroll-snap-align:start;
+  transition:transform var(--t-med) var(--ease), box-shadow var(--t-med) var(--ease);
+  will-change:transform;
+}
+.cat:hover{ transform:translateY(-4px); box-shadow:var(--pico-shadow-md); }
+.cat:hover .media > img{ transform:scale(1.06); }
+.cat .media{ position:absolute; inset:0; aspect-ratio:auto; }
+.cat__overlay{
+  position:absolute; inset:0; z-index:2;
+  display:flex; flex-direction:column; justify-content:flex-end; padding:20px;
+  background:linear-gradient(180deg, transparent 35%, rgba(23,23,23,.78) 100%);
+  color:var(--pico-ivory);
+}
+.cat__overlay h4{ color:var(--pico-ivory); font-style:italic; font-size:24px; }
+.cat__overlay .meta{ display:flex; align-items:center; justify-content:space-between; margin-top:8px; gap:10px; }
+.cat__overlay .meta small{ font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:rgba(199,169,109,.85); }
+.cat__overlay span.cta{ font-size:10px; letter-spacing:.22em; text-transform:uppercase; color:var(--pico-gold); display:inline-flex; gap:8px; align-items:center; }
+.cat__index{
+  position:absolute; top:14px; left:14px; z-index:2;
+  font-family:var(--font-display); font-style:italic; color:var(--pico-gold);
+  background:rgba(23,23,23,.55); padding:4px 10px; font-size:13px;
+  border:1px solid rgba(199,169,109,.5);
+}
+
+.cats-progress{
+  position:relative;
+  height:1px; background:var(--pico-line);
+  margin:18px var(--rail) 0 0;
+}
+.cats-progress > span{
+  position:absolute; left:0; top:-1px; height:3px; width:0;
+  background:var(--pico-gold);
+  transition:width 200ms var(--ease);
+}
+
+@media (max-width:560px){
+  .cats-track{ grid-auto-columns:78%; gap:12px; }
+  .cats-nav{ display:none; }
+}
+
+/* ================================================================
+   SECTION HEAD (editorial)
+   ================================================================ */
+.section-head{
+  display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:end;
+  margin-bottom:56px;
+}
+@media (max-width:880px){ .section-head{ grid-template-columns:1fr; gap:24px; } }
+.section-head__title h2{ font-style:italic; }
+.section-head__title h2 em{ font-style:normal; color:var(--pico-maroon); }
+.section-head__meta{ color:var(--pico-mute); }
+.section-head__meta p{ max-width:48ch; }
+.section-head__meta a{ display:inline-flex; gap:8px; align-items:center; margin-top:18px; color:var(--pico-maroon); font-size:11px; letter-spacing:.2em; text-transform:uppercase; border-bottom:1px solid var(--pico-gold); padding-bottom:4px; }
+
+/* ================================================================
+   PRODUCT GRID
+   ================================================================ */
+.filters{
+  display:flex; gap:8px; flex-wrap:wrap; margin-bottom:32px;
+}
+.chip{
+  height:36px; padding:0 16px; display:inline-flex; align-items:center;
+  border:1px solid var(--pico-line);
+  font-size:11px; letter-spacing:.18em; text-transform:uppercase;
+  background:transparent; color:var(--pico-ink);
+  cursor:pointer;
+  transition:background var(--t-fast) var(--ease), color var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease);
+}
+.chip:hover{ border-color:var(--pico-ink); }
+.chip.is-active{ background:var(--pico-ink); color:var(--pico-ivory); border-color:var(--pico-ink); }
+
+.products{ display:grid; grid-template-columns:repeat(4, 1fr); gap:24px; }
+@media (max-width:1080px){ .products{ grid-template-columns:repeat(3,1fr); } }
+@media (max-width:780px){  .products{ grid-template-columns:repeat(2,1fr); gap:14px; } }
+@media (max-width:420px){  .products{ grid-template-columns:1fr; } }
+
+.product{
+  position:relative;
+  cursor:pointer;
+}
+.product .media{ aspect-ratio:3/4; background:var(--pico-ivory-2); }
+.product:hover .media > img{ transform:scale(1.04); }
+
+/* Hover overlay — buttons sit on the image, gradient ensures legibility */
+.product__hover{
+  position:absolute; inset:0; z-index:3;
+  display:flex; align-items:flex-end; justify-content:center;
+  padding:14px;
+  background:linear-gradient(180deg, transparent 30%, rgba(23,23,23,.0) 45%, rgba(23,23,23,.55) 78%, rgba(23,23,23,.78) 100%);
+  opacity:0;
+  transition:opacity var(--t-med) var(--ease);
+  pointer-events:none;
+}
+.product:hover .product__hover,
+.product:focus-within .product__hover{ opacity:1; pointer-events:auto; }
+
+.product__quick{
+  display:flex; gap:8px; width:100%;
+  transform:translateY(10px);
+  transition:transform var(--t-med) var(--ease);
+}
+.product:hover .product__quick,
+.product:focus-within .product__quick{ transform:none; }
+.product__quick .btn{
+  flex:1; min-width:0;
+  backdrop-filter:saturate(140%) blur(2px);
+  -webkit-backdrop-filter:saturate(140%) blur(2px);
+}
+.product__quick .btn--ghost{
+  color:var(--pico-ivory);
+  border-color:rgba(255,242,227,.65);
+  background:rgba(23,23,23,.18);
+}
+.product__quick .btn--ghost:hover{
+  background:var(--pico-ivory);
+  color:var(--pico-ink);
+  border-color:var(--pico-ivory);
+}
+.product__body{
+  display:grid; grid-template-columns:1fr auto; gap:8px;
+  padding:14px 0 8px;
+  border-top:1px solid var(--pico-line-soft);
+  margin-top:14px;
+}
+.product__name{ font-family:var(--font-display); font-size:20px; font-style:italic; }
+.product__cat{ font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--pico-mute); margin-top:4px; }
+.product__price{ font-family:var(--font-display); font-size:20px; color:var(--pico-maroon); }
+.product__price .currency{ color:var(--pico-gold); margin-right:2px; font-size:14px; vertical-align:baseline; }
+.product__copy{ font-size:13px; color:var(--pico-mute); margin-top:6px; max-width:38ch; }
+.product__badge{
+  position:absolute; top:12px; left:12px; z-index:2;
+}
+
+/* ================================================================
+   PRODUCT DETAIL
+   ================================================================ */
+.pdp{ display:grid; grid-template-columns:1.2fr 1fr; gap:60px; align-items:start; }
+@media (max-width:980px){ .pdp{ grid-template-columns:1fr; } }
+.pdp__gallery{ display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+.pdp__gallery .media{ aspect-ratio:3/4; }
+.pdp__gallery .media:first-child{ grid-column:span 2; aspect-ratio:5/4; }
+.pdp__crumbs{ font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--pico-mute); margin-bottom:18px; }
+.pdp__title{ font-style:italic; }
+.pdp__price{ font-family:var(--font-display); font-size:32px; color:var(--pico-maroon); margin-top:8px; }
+.pdp__desc{ margin-top:18px; max-width:54ch; color:var(--pico-ink); }
+.pdp__story{ margin-top:24px; padding:20px; background:var(--pico-ivory-2); border-left:2px solid var(--pico-gold); }
+.pdp__story h4{ font-size:14px; font-family:var(--font-ui); letter-spacing:.18em; text-transform:uppercase; color:var(--pico-maroon); }
+.pdp__story p{ margin-top:10px; font-family:var(--font-display); font-style:italic; font-size:18px; line-height:1.5; }
+.qty{
+  display:inline-flex; align-items:center; gap:0; border:1px solid var(--pico-ink);
+}
+.qty button{ width:42px; height:42px; font-size:16px; }
+.qty input{ width:48px; height:42px; text-align:center; border:0; border-left:1px solid var(--pico-line); border-right:1px solid var(--pico-line); background:transparent; }
+.pdp__actions{ display:flex; gap:12px; margin-top:24px; flex-wrap:wrap; align-items:center; }
+.pdp__features{ display:grid; grid-template-columns:repeat(2,1fr); gap:14px; margin-top:32px; }
+.pdp__feature{ display:flex; gap:14px; align-items:flex-start; padding:14px 0; border-top:1px solid var(--pico-line-soft); }
+.pdp__feature svg{ width:20px; height:20px; flex-shrink:0; stroke:var(--pico-maroon); fill:none; stroke-width:1.4; margin-top:2px; }
+.pdp__feature h5{ font-family:var(--font-ui); font-size:12px; letter-spacing:.18em; text-transform:uppercase; margin:0 0 4px; color:var(--pico-ink); font-weight:600; }
+.pdp__feature p{ font-size:12px; color:var(--pico-mute); }
+
+/* ================================================================
+   CUSTOM FABRIC SERVICE
+   ================================================================ */
+.custom-hero{
+  position:relative; padding:120px 0;
+  background:var(--pico-ink);
+  color:var(--pico-ivory);
+  overflow:hidden;
+}
+.custom-hero::before{
+  content:""; position:absolute; inset:0;
+  background:
+    radial-gradient(60% 80% at 80% 30%, rgba(199,169,109,.15), transparent 60%),
+    radial-gradient(60% 80% at 10% 70%, rgba(88,25,25,.30), transparent 60%);
+  pointer-events:none;
+}
+.custom-hero__inner{
+  position:relative; z-index:1;
+  display:grid; grid-template-columns:1.1fr 1fr; gap:60px; align-items:center;
+}
+@media (max-width:880px){ .custom-hero__inner{ grid-template-columns:1fr; } }
+.custom-hero h1{ color:var(--pico-ivory); font-style:italic; }
+.custom-hero h1 em{ font-style:normal; color:var(--pico-gold); }
+.custom-hero p{ color:rgba(255,242,227,.78); margin-top:24px; max-width:54ch; }
+.custom-hero .eyebrow{ color:var(--pico-gold); }
+.custom-hero .eyebrow::before{ background:var(--pico-gold); }
+.custom-hero__art{ position:relative; aspect-ratio:1/1; }
+.custom-hero__art .media{ position:absolute; inset:0; aspect-ratio:auto; border:1px solid var(--pico-gold); }
+
+.steps{
+  display:grid; grid-template-columns:repeat(5, 1fr); gap:24px; margin-top:60px;
+}
+@media (max-width:880px){ .steps{ grid-template-columns:repeat(2,1fr); } }
+.step{ position:relative; padding-top:24px; border-top:1px solid rgba(199,169,109,.4); color:rgba(255,242,227,.85); }
+.step__num{ font-family:var(--font-display); font-style:italic; color:var(--pico-gold); font-size:14px; }
+.step h4{ color:var(--pico-ivory); margin-top:6px; font-size:18px; }
+.step p{ font-size:12px; color:rgba(255,242,227,.7); margin-top:6px; }
+
+/* Custom flow form */
+.custom-flow{
+  display:grid; grid-template-columns: 1fr 1.4fr; gap:60px;
+}
+@media (max-width:980px){ .custom-flow{ grid-template-columns:1fr; } }
+.custom-flow__sidebar{
+  position:sticky; top:100px;
+  align-self:start;
+  border:1px solid var(--pico-line);
+  background:var(--pico-white);
+  padding:28px;
+}
+.custom-flow__sidebar h3{ font-style:italic; }
+.custom-flow__steps{ display:flex; flex-direction:column; gap:12px; margin-top:24px; }
+.custom-flow__step{
+  display:flex; gap:14px; align-items:flex-start;
+  padding:12px 0; border-top:1px solid var(--pico-line-soft);
+}
+.custom-flow__step:first-child{ border-top:0; padding-top:0; }
+.custom-flow__step .num{
+  width:28px; height:28px; flex-shrink:0;
+  border:1px solid var(--pico-line); border-radius:50%;
+  display:inline-flex; align-items:center; justify-content:center;
+  font-size:12px; font-weight:500; color:var(--pico-mute);
+}
+.custom-flow__step.is-active .num{ background:var(--pico-maroon); border-color:var(--pico-maroon); color:var(--pico-gold); }
+.custom-flow__step.is-done .num{ background:var(--pico-gold); border-color:var(--pico-gold); color:var(--pico-maroon); }
+.custom-flow__step h5{ font-size:12px; letter-spacing:.18em; text-transform:uppercase; margin:4px 0 2px; }
+.custom-flow__step p{ font-size:12px; color:var(--pico-mute); }
+
+.flow-panel{ display:none; }
+.flow-panel.is-active{ display:block; animation:fade .4s var(--ease-out); }
+@keyframes fade{ from{ opacity:0; transform:translateY(8px); } to{ opacity:1; transform:none; } }
+
+.upload{
+  border:1px dashed var(--pico-line); padding:36px; text-align:center;
+  background:var(--pico-ivory-2);
+  transition:border-color var(--t-fast) var(--ease), background var(--t-fast) var(--ease);
+  cursor:pointer;
+}
+.upload:hover{ border-color:var(--pico-maroon); background:var(--pico-ivory); }
+.upload svg{ width:42px; height:42px; stroke:var(--pico-maroon); fill:none; stroke-width:1; margin:0 auto 14px; display:block; }
+.upload h4{ font-style:italic; }
+.upload p{ color:var(--pico-mute); font-size:13px; margin-top:6px; }
+.upload__preview{ display:none; margin-top:18px; aspect-ratio:4/3; }
+.upload__preview.is-on{ display:block; }
+
+.choice-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+@media (max-width:560px){ .choice-grid{ grid-template-columns:repeat(2,1fr); } }
+.choice{
+  border:1px solid var(--pico-line); padding:14px;
+  cursor:pointer; transition:border-color var(--t-fast) var(--ease), background var(--t-fast) var(--ease);
+}
+.choice .media{ aspect-ratio:1/1; margin-bottom:10px; }
+.choice h5{ font-family:var(--font-display); font-style:italic; font-size:18px; margin:0; }
+.choice p{ font-size:11px; color:var(--pico-mute); margin-top:2px; }
+.choice.is-selected{ border-color:var(--pico-maroon); background:var(--pico-ivory-2); }
+.choice.is-selected h5{ color:var(--pico-maroon); }
+
+.form-grid{ display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+@media (max-width:560px){ .form-grid{ grid-template-columns:1fr; } }
+.form-grid .field--full{ grid-column:1/-1; }
+
+.flow-actions{ display:flex; justify-content:space-between; gap:12px; margin-top:32px; padding-top:24px; border-top:1px solid var(--pico-line-soft); }
+@media (max-width:560px){ .flow-actions{ flex-direction:column-reverse; } .flow-actions .btn{ width:100%; } }
+
+/* Custom flow confirmation */
+.confirm{ text-align:center; padding:60px 0; }
+.confirm__seal{
+  width:120px; height:120px; margin:0 auto 24px;
+  border:1px solid var(--pico-gold);
+  border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  background:var(--pico-ivory-2);
+  position:relative;
+}
+.confirm__seal::before{
+  content:""; position:absolute; inset:8px; border:1px dashed var(--pico-gold); border-radius:50%;
+}
+.confirm__seal svg{ width:48px; height:48px; stroke:var(--pico-maroon); fill:none; stroke-width:1.2; }
+.confirm h2{ font-style:italic; }
+.confirm h2 em{ font-style:normal; color:var(--pico-maroon); }
+.confirm p.lead{ margin:18px auto 0; max-width:54ch; }
+.confirm__journey{ display:grid; grid-template-columns:repeat(5,1fr); gap:14px; margin-top:60px; text-align:left; }
+@media (max-width:780px){ .confirm__journey{ grid-template-columns:repeat(2,1fr); } }
+.confirm__journey .step{ color:var(--pico-ink); border-color:var(--pico-line); }
+.confirm__journey .step h4{ color:var(--pico-ink); font-size:18px; }
+.confirm__journey .step p{ color:var(--pico-mute); }
+.confirm__ref{
+  margin-top:48px; padding:18px; background:var(--pico-ivory-2); border:1px solid var(--pico-gold);
+  display:inline-block;
+  font-family:var(--font-display); font-style:italic; font-size:18px;
+}
+.confirm__ref strong{ color:var(--pico-maroon); margin-left:10px; letter-spacing:.18em; font-style:normal; font-family:var(--font-ui); font-size:14px; font-weight:600; }
+
+/* ================================================================
+   STORY / CRAFT
+   ================================================================ */
+.story{ display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; }
+@media (max-width:880px){ .story{ grid-template-columns:1fr; } }
+.story__media .media{ aspect-ratio:4/5; }
+.story__copy h2{ font-style:italic; }
+.story__copy p{ margin-top:18px; max-width:56ch; }
+.story__pillars{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:32px; }
+.pillar{
+  padding:18px; background:var(--pico-ivory-2); border:1px solid var(--pico-line-soft);
+}
+.pillar h5{ font-family:var(--font-display); font-style:italic; font-size:20px; color:var(--pico-maroon); margin:0; }
+.pillar p{ font-size:12px; color:var(--pico-ink); margin-top:6px; }
+
+.craft{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+@media (max-width:880px){ .craft{ grid-template-columns:repeat(2,1fr); } }
+.craft__card{ padding:24px; border:1px solid var(--pico-line); background:var(--pico-white); }
+.craft__card .num{ font-family:var(--font-display); font-style:italic; font-size:14px; color:var(--pico-gold); }
+.craft__card h4{ margin-top:8px; font-size:22px; font-style:italic; }
+.craft__card p{ font-size:13px; color:var(--pico-mute); margin-top:8px; }
+.craft__card .media{ aspect-ratio:3/4; margin-top:18px; }
+
+/* ================================================================
+   CART / CHECKOUT
+   ================================================================ */
+.cart-grid{ display:grid; grid-template-columns:1.4fr 1fr; gap:60px; }
+@media (max-width:980px){ .cart-grid{ grid-template-columns:1fr; } }
+
+.cart-line{
+  display:grid; grid-template-columns:120px 1fr auto; gap:20px;
+  padding:20px 0; border-bottom:1px solid var(--pico-line-soft);
+  align-items:center;
+}
+.cart-line .media{ aspect-ratio:3/4; }
+.cart-line__name{ font-family:var(--font-display); font-size:22px; font-style:italic; }
+.cart-line__cat{ font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--pico-mute); margin-top:2px; }
+.cart-line__qty{ display:flex; align-items:center; gap:14px; margin-top:14px; }
+.cart-line__qty .qty button{ width:32px; height:32px; }
+.cart-line__qty .qty input{ height:32px; width:38px; }
+.cart-line__remove{ font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--pico-mute); border-bottom:1px solid var(--pico-line); padding-bottom:2px; }
+.cart-line__remove:hover{ color:var(--pico-maroon); border-color:var(--pico-maroon); }
+.cart-line__price{ font-family:var(--font-display); font-size:22px; color:var(--pico-maroon); text-align:right; }
+
+.cart-empty{ text-align:center; padding:80px 20px; border:1px dashed var(--pico-line); }
+.cart-empty svg{ width:60px; height:60px; stroke:var(--pico-maroon); fill:none; stroke-width:1; margin:0 auto 18px; display:block; opacity:.6; }
+.cart-empty h3{ font-style:italic; }
+.cart-empty p{ color:var(--pico-mute); margin-top:8px; }
+
+.summary{
+  border:1px solid var(--pico-line); background:var(--pico-white); padding:28px;
+  position:sticky; top:100px; align-self:start;
+}
+.summary h3{ font-style:italic; }
+.summary__row{ display:flex; justify-content:space-between; padding:10px 0; font-size:13px; }
+.summary__row.total{ border-top:1px solid var(--pico-line); margin-top:14px; padding-top:18px; font-family:var(--font-display); font-size:22px; }
+.summary__row.total .val{ color:var(--pico-maroon); }
+.summary__form{ display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:18px; }
+.summary__form .field--full{ grid-column:1/-1; }
+.payments{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:14px; }
+.pay{
+  border:1px solid var(--pico-line); padding:10px; text-align:center;
+  font-size:11px; letter-spacing:.18em; text-transform:uppercase; cursor:pointer;
+  transition:border-color var(--t-fast) var(--ease), background var(--t-fast) var(--ease);
+}
+.pay.is-active{ border-color:var(--pico-maroon); background:var(--pico-ivory-2); color:var(--pico-maroon); }
+.trust{ display:flex; gap:18px; margin-top:18px; flex-wrap:wrap; color:var(--pico-mute); font-size:11px; letter-spacing:.16em; text-transform:uppercase; }
+.trust span{ display:inline-flex; gap:8px; align-items:center; }
+.trust svg{ width:14px; height:14px; stroke:var(--pico-gold); fill:none; stroke-width:1.4; }
+
+/* ================================================================
+   FOOTER
+   ================================================================ */
+.footer{
+  background:var(--pico-ink); color:var(--pico-ivory);
+  padding:80px 0 40px; margin-top:60px;
+}
+.footer__top{ display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:48px; }
+@media (max-width:880px){ .footer__top{ grid-template-columns:1fr 1fr; } }
+@media (max-width:560px){ .footer__top{ grid-template-columns:1fr; } }
+.footer h4{ color:var(--pico-gold); font-size:14px; font-family:var(--font-ui); letter-spacing:.18em; text-transform:uppercase; font-weight:500; }
+.footer ul{ list-style:none; padding:0; margin:18px 0 0; display:flex; flex-direction:column; gap:10px; }
+.footer a{ color:rgba(255,242,227,.7); font-size:13px; }
+.footer a:hover{ color:var(--pico-gold); }
+.footer__brand p{ color:rgba(255,242,227,.7); margin-top:18px; max-width:36ch; font-family:var(--font-display); font-style:italic; font-size:18px; line-height:1.4; }
+.footer__news{ display:flex; gap:8px; margin-top:18px; }
+.footer__news input{ flex:1; height:44px; padding:0 14px; background:transparent; border:1px solid rgba(255,242,227,.3); color:var(--pico-ivory); }
+.footer__news input::placeholder{ color:rgba(255,242,227,.5); }
+.footer__news button{ height:44px; padding:0 22px; background:var(--pico-gold); color:var(--pico-maroon); font-size:11px; letter-spacing:.18em; text-transform:uppercase; font-weight:500; }
+.footer__bottom{ margin-top:60px; padding-top:24px; border-top:1px solid rgba(255,242,227,.18); display:flex; justify-content:space-between; gap:24px; flex-wrap:wrap; color:rgba(255,242,227,.5); font-size:11px; letter-spacing:.18em; text-transform:uppercase; }
+
+/* ================================================================
+   DASHBOARD
+   ================================================================ */
+.dash{
+  display:grid; grid-template-columns:240px 1fr; min-height:calc(100vh - 78px);
+  background:var(--pico-ivory);
+}
+@media (max-width:880px){ .dash{ grid-template-columns:1fr; } }
+.dash__side{
+  border-right:1px solid var(--pico-line);
+  background:var(--pico-white);
+  padding:32px 24px;
+  position:sticky; top:78px; align-self:start; height:calc(100vh - 78px); overflow:auto;
+}
+@media (max-width:880px){ .dash__side{ position:relative; height:auto; border-right:0; border-bottom:1px solid var(--pico-line); } }
+.dash__brand{ display:flex; align-items:center; gap:8px; margin-bottom:24px; padding-bottom:18px; border-bottom:1px solid var(--pico-line-soft); }
+.dash__brand .brand-mark__logo{ font-size:22px; display:inline-block; }
+.dash__brand small{ font-size:9px; letter-spacing:.22em; text-transform:uppercase; color:var(--pico-mute); }
+.dash__nav{ display:flex; flex-direction:column; gap:2px; }
+.dash__nav-item{
+  display:flex; gap:12px; align-items:center; padding:10px 12px;
+  font-size:12px; letter-spacing:.16em; text-transform:uppercase;
+  border-left:2px solid transparent;
+  transition:background var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease), color var(--t-fast) var(--ease);
+}
+.dash__nav-item:hover{ background:var(--pico-ivory-2); }
+.dash__nav-item.is-active{ background:var(--pico-ivory-2); border-color:var(--pico-maroon); color:var(--pico-maroon); }
+.dash__nav-item svg{ width:16px; height:16px; stroke:currentColor; fill:none; stroke-width:1.4; }
+.dash__nav-section{ font-size:9px; letter-spacing:.22em; text-transform:uppercase; color:var(--pico-mute); padding:18px 12px 8px; }
+
+.dash__main{ padding:32px var(--rail) 60px; }
+.dash__head{ display:flex; align-items:end; justify-content:space-between; gap:24px; margin-bottom:32px; flex-wrap:wrap; }
+.dash__head h2{ font-style:italic; }
+.dash__head .meta{ display:flex; gap:18px; flex-wrap:wrap; align-items:center; color:var(--pico-mute); font-size:12px; }
+
+.kpis{ display:grid; grid-template-columns:repeat(5,1fr); gap:14px; }
+@media (max-width:1080px){ .kpis{ grid-template-columns:repeat(3,1fr); } }
+@media (max-width:680px){  .kpis{ grid-template-columns:repeat(2,1fr); } }
+.kpi{
+  background:var(--pico-white); border:1px solid var(--pico-line); padding:20px;
+  position:relative; overflow:hidden;
+}
+.kpi__label{ font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--pico-mute); }
+.kpi__value{ font-family:var(--font-display); font-size:38px; color:var(--pico-ink); margin-top:6px; line-height:1; }
+.kpi__delta{ font-size:11px; color:var(--pico-maroon); margin-top:8px; display:inline-flex; gap:6px; align-items:center; }
+.kpi__delta.gold{ color:var(--pico-gold); }
+.kpi__bar{ height:3px; background:var(--pico-ivory-2); margin-top:14px; position:relative; overflow:hidden; }
+.kpi__bar > span{ position:absolute; inset:0; background:var(--pico-maroon); }
+
+.dash__row{ display:grid; grid-template-columns:1.4fr 1fr; gap:14px; margin-top:24px; }
+@media (max-width:980px){ .dash__row{ grid-template-columns:1fr; } }
+
+.panel{
+  background:var(--pico-white); border:1px solid var(--pico-line);
+}
+.panel__head{ display:flex; align-items:center; justify-content:space-between; padding:18px 20px; border-bottom:1px solid var(--pico-line-soft); }
+.panel__head h3{ font-size:18px; font-style:italic; }
+.panel__head .pill{ font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--pico-mute); }
+.panel__body{ padding:20px; }
+
+/* Requests table */
+.req-table{ width:100%; border-collapse:collapse; }
+.req-table th,.req-table td{ text-align:left; padding:14px 12px; border-bottom:1px solid var(--pico-line-soft); font-size:13px; vertical-align:middle; }
+.req-table th{ font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--pico-mute); font-weight:500; background:var(--pico-ivory-2); }
+.req-table tr{ cursor:pointer; transition:background var(--t-fast) var(--ease); }
+.req-table tbody tr:hover{ background:var(--pico-ivory); }
+.req-table tr.is-selected{ background:var(--pico-ivory-2); }
+.req-table .thumb{ width:48px; height:60px; }
+.req-table .name{ font-family:var(--font-display); font-size:18px; font-style:italic; }
+.req-table .city{ color:var(--pico-mute); }
+
+.status{
+  display:inline-flex; align-items:center; gap:6px;
+  padding:5px 10px; font-size:10px; letter-spacing:.18em; text-transform:uppercase; font-weight:500;
+  border:1px solid var(--pico-line);
+}
+.status::before{ content:""; width:6px; height:6px; border-radius:50%; }
+.status[data-status="submitted"]{ color:var(--pico-mute); }
+.status[data-status="submitted"]::before{ background:var(--pico-mute); }
+.status[data-status="pickup"]{ color:#7a5b00; border-color:#caa744; background:#fff5d8; }
+.status[data-status="pickup"]::before{ background:#caa744; }
+.status[data-status="collected"]{ color:#0a5b3a; border-color:#7ec1a3; background:#dff3e8; }
+.status[data-status="collected"]::before{ background:#0a8a52; }
+.status[data-status="review"]{ color:var(--pico-maroon); border-color:var(--pico-gold); background:var(--pico-ivory-2); }
+.status[data-status="review"]::before{ background:var(--pico-maroon); }
+.status[data-status="production"]{ color:var(--pico-maroon); border-color:var(--pico-maroon); background:#f7e1d9; }
+.status[data-status="production"]::before{ background:var(--pico-maroon); }
+.status[data-status="qc"]{ color:#3a3a3a; border-color:var(--pico-ink); background:var(--pico-ivory-2); }
+.status[data-status="qc"]::before{ background:var(--pico-ink); }
+.status[data-status="ready"]{ color:#fff; background:var(--pico-maroon); border-color:var(--pico-maroon); }
+.status[data-status="ready"]::before{ background:var(--pico-gold); }
+
+/* Workflow tracker */
+.tracker{ display:flex; align-items:center; gap:0; }
+.tracker__node{ display:flex; flex-direction:column; align-items:center; flex:1; min-width:0; position:relative; }
+.tracker__dot{
+  width:14px; height:14px; border-radius:50%;
+  background:var(--pico-white); border:1px solid var(--pico-line);
+  z-index:1;
+}
+.tracker__line{ flex:1; height:1px; background:var(--pico-line); margin-top:-7px; }
+.tracker__label{ font-size:9px; letter-spacing:.18em; text-transform:uppercase; color:var(--pico-mute); margin-top:8px; text-align:center; }
+.tracker__node.is-done .tracker__dot{ background:var(--pico-gold); border-color:var(--pico-gold); }
+.tracker__node.is-current .tracker__dot{ background:var(--pico-maroon); border-color:var(--pico-maroon); box-shadow:0 0 0 4px var(--pico-ivory-2); }
+.tracker__node.is-current .tracker__label{ color:var(--pico-maroon); font-weight:600; }
+.tracker__line.is-done{ background:var(--pico-gold); }
+
+/* Detail panel */
+.detail{ display:grid; grid-template-columns:280px 1fr; gap:24px; }
+@media (max-width:780px){ .detail{ grid-template-columns:1fr; } }
+.detail__media .media{ aspect-ratio:3/4; }
+.detail__quote{
+  margin-top:14px; padding:14px; background:var(--pico-ivory-2); border-left:2px solid var(--pico-gold);
+  font-family:var(--font-display); font-style:italic; font-size:16px; line-height:1.5;
+}
+.detail__data{ display:grid; grid-template-columns:repeat(2,1fr); gap:18px; }
+@media (max-width:560px){ .detail__data{ grid-template-columns:1fr; } }
+.data{ display:flex; flex-direction:column; gap:4px; padding:10px 0; border-top:1px solid var(--pico-line-soft); }
+.data:nth-child(-n+2){ border-top:0; padding-top:0; }
+.data .k{ font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--pico-mute); }
+.data .v{ font-size:14px; color:var(--pico-ink); }
+.data .v.maroon{ color:var(--pico-maroon); }
+
+.notes-list{ display:flex; flex-direction:column; gap:10px; }
+.note{ padding:14px; background:var(--pico-ivory); border:1px solid var(--pico-line-soft); font-size:13px; }
+.note small{ display:block; color:var(--pico-mute); font-size:10px; letter-spacing:.18em; text-transform:uppercase; margin-bottom:6px; }
+
+.timeline{ display:flex; flex-direction:column; }
+.timeline__row{ display:flex; gap:14px; padding:10px 0; border-bottom:1px solid var(--pico-line-soft); align-items:center; font-size:13px; }
+.timeline__date{ width:90px; color:var(--pico-mute); font-size:11px; letter-spacing:.18em; text-transform:uppercase; flex-shrink:0; }
+
+/* ================================================================
+   DESIGN SYSTEM PROOF (toggleable, route #/system)
+   ================================================================ */
+.ds-proof h3{ font-style:italic; margin:24px 0 12px; }
+.ds-swatches{ display:grid; grid-template-columns:repeat(6,1fr); gap:14px; }
+@media (max-width:780px){ .ds-swatches{ grid-template-columns:repeat(3,1fr); } }
+.ds-swatch{
+  border:1px solid var(--pico-line); padding:0; overflow:hidden;
+}
+.ds-swatch__color{ height:90px; }
+.ds-swatch__meta{ padding:12px; }
+.ds-swatch__meta strong{ font-family:var(--font-display); font-style:italic; font-size:18px; }
+.ds-swatch__meta small{ font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--pico-mute); display:block; margin-top:4px; }
+.ds-block{ padding:24px; border:1px solid var(--pico-line); background:var(--pico-white); }
+.ds-row{ display:flex; gap:14px; flex-wrap:wrap; align-items:center; }
+
+/* Word-by-word mask reveal (e.g. The Atelier Catalogue title) */
+.word-mask{
+  display:inline-block;
+  overflow:hidden;
+  vertical-align:bottom;
+  line-height:inherit;
+  padding:0 .04em 0 0;
+}
+.word-mask__inner{
+  display:inline-block;
+  transform:translate3d(0, 100%, 0);
+  will-change:transform;
+}
+.cats-title{
+  position:relative;
+  display:flex;
+  flex-wrap:wrap;
+  gap:.18em .28em;
+  align-items:flex-end;
+}
+.cats-rule{
+  display:block;
+  width:100%;
+  height:1px;
+  margin-top:14px;
+  background:linear-gradient(90deg, var(--pico-gold) 0%, var(--pico-gold) 100%);
+  background-size:0% 100%;
+  background-repeat:no-repeat;
+  transform-origin:left center;
+}
+@media (prefers-reduced-motion: reduce){
+  .word-mask__inner{ transform:none !important; }
+  .cats-rule{ background-size:100% 100% !important; }
+}
+
+/* Scroll-driven assembly piece (Craft section) */
+.assemble-piece{
+  opacity:0;
+  will-change:opacity, transform, filter;
+  transform:translate3d(0,0,0);
+}
+.craft-scene .craft__card{ transform-origin:50% 70%; }
+.craft-spine{
+  position:relative;
+  height:1px; background:var(--pico-line);
+  margin:48px auto 0;
+  max-width:960px;
+}
+.craft-spine__fill{
+  position:absolute; left:0; top:-1px; height:3px;
+  width:calc(var(--p, 0) * 100%);
+  background:linear-gradient(90deg, transparent, var(--pico-gold), transparent);
+  transition:width 120ms linear;
+}
+@media (prefers-reduced-motion: reduce){
+  .assemble-piece{ opacity:1 !important; transform:none !important; filter:none !important; }
+  .craft-spine__fill{ width:100%; }
+}
+
+/* Scroll-driven scene (Custom Service teaser) */
+.scroll-scene{ --p: 0; }
+.scroll-scene .h-line{
+  display:block;
+  opacity:0;
+  transform:translate3d(0, 60px, 0);
+  filter:blur(6px);
+  will-change:opacity, transform, filter;
+}
+.scroll-scene .scene-el{
+  display:inline-flex;
+  flex-wrap:wrap;
+  gap:14px;
+  opacity:0;
+  transform:translate3d(0, 40px, 0);
+  will-change:opacity, transform;
+}
+.scroll-scene p.scene-el{ display:block; }
+.custom-hero .custom-hero__art{
+  transform-origin:50% 60%;
+  will-change:transform;
+}
+/* Slim warm light line that grows with scroll progress */
+.custom-hero::after{
+  content:"";
+  position:absolute;
+  left:50%; top:24px;
+  width:1px;
+  background:linear-gradient(180deg, transparent 0%, var(--pico-gold) 30%, var(--pico-gold) 70%, transparent 100%);
+  opacity:.55;
+  height:calc(var(--p, 0) * 80vh);
+  max-height:60%;
+  transform:translateX(-50%);
+  pointer-events:none;
+  z-index:0;
+  transition:height 100ms linear;
+}
+@media (prefers-reduced-motion: reduce){
+  .scroll-scene .h-line, .scroll-scene .scene-el{ opacity:1; transform:none; filter:none; }
+  .custom-hero::after{ display:none; }
+}
+
+/* Typewriter */
+.typewriter{
+  display:inline;
+  white-space:normal;
+}
+.typewriter .tw-em{ font-style:normal; color:var(--pico-maroon); }
+.typewriter .tw-caret{
+  display:inline-block;
+  width:.06em;
+  height:.9em;
+  background:var(--pico-gold);
+  margin-left:.06em;
+  vertical-align:-.1em;
+  animation:tw-blink 1s steps(2,end) infinite;
+}
+.typewriter.is-done .tw-caret{ animation-iteration-count:6; }
+@keyframes tw-blink{ 0%,49%{ opacity:1 } 50%,100%{ opacity:0 } }
+@media (prefers-reduced-motion: reduce){ .typewriter .tw-caret{ display:none; } }
+
+/* Utilities */
+.flex{ display:flex; }
+.between{ justify-content:space-between; }
+.center{ align-items:center; }
+.gap-12{ gap:12px; } .gap-16{ gap:16px; } .gap-24{ gap:24px; } .gap-32{ gap:32px; }
+.mt-8{ margin-top:8px; } .mt-16{ margin-top:16px; } .mt-24{ margin-top:24px; } .mt-32{ margin-top:32px; } .mt-48{ margin-top:48px; }
+.text-center{ text-align:center; }
+
+/* ================================================================
+   TOAST
+   ================================================================ */
+.toast{
+  position:fixed; left:50%; bottom:32px; transform:translateX(-50%) translateY(20px);
+  background:var(--pico-ink); color:var(--pico-ivory);
+  padding:14px 22px; font-size:12px; letter-spacing:.18em; text-transform:uppercase;
+  border:1px solid var(--pico-gold);
+  opacity:0; pointer-events:none;
+  transition:opacity var(--t-med) var(--ease), transform var(--t-med) var(--ease);
+  z-index:200;
+}
+.toast.is-on{ opacity:1; transform:translateX(-50%) translateY(0); pointer-events:auto; }
+</style>
+</head>
+<body>
+
+<!-- ================================================================
+     HEADER
+     ================================================================ -->
+<header class="site-header" id="siteHeader">
+  <div class="site-header__inner">
+    <a class="brand-mark" href="#/" aria-label="PICO Home">
+      <img class="brand-mark__img" src="./assets/logo/PICO%20LOGO.png" alt="PICO" width="60" height="54" onerror="this.classList.add('is-failed')" />
+      <span class="brand-mark__logo">PICO</span>
+    </a>
+    <nav class="nav" aria-label="Primary">
+      <a href="#/" data-route="/">Home</a>
+      <a href="#/shop" data-route="/shop">Shop</a>
+      <a href="#/customize" data-route="/customize">Custom Atelier</a>
+      <a href="#/story" data-route="/story">Story</a>
+      <a href="#/craft" data-route="/craft">Craft</a>
+      <a href="#/dashboard" data-route="/dashboard">Atelier OS</a>
+    </nav>
+    <div class="header-actions">
+      <button class="icon-btn" aria-label="Search">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
+      </button>
+      <button class="icon-btn" aria-label="Account">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg>
+      </button>
+      <button class="icon-btn" id="cartBtn" aria-label="Cart">
+        <svg viewBox="0 0 24 24"><path d="M5 7h14l-1.5 12a2 2 0 0 1-2 1.7H8.5A2 2 0 0 1 6.5 19L5 7z"/><path d="M9 7V5a3 3 0 0 1 6 0v2"/></svg>
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
+      <button class="icon-btn menu-toggle" id="menuToggle" aria-label="Menu" aria-expanded="false">
+        <svg viewBox="0 0 24 24"><line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="17" x2="21" y2="17"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+<nav class="mobile-nav" id="mobileNav" aria-label="Mobile">
+  <a href="#/">Home</a>
+  <a href="#/shop">Shop</a>
+  <a href="#/customize">Custom Atelier</a>
+  <a href="#/story">Story</a>
+  <a href="#/craft">Craft</a>
+  <a href="#/dashboard">Atelier OS</a>
+  <a href="#/cart">Cart</a>
+</nav>
+
+<main id="main">
+
+  <!-- ================================================================
+       VIEW: HOME
+       ================================================================ -->
+  <section class="view" data-view="/" id="view-home">
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero__bg" aria-hidden="true"></div>
+      <div class="container hero__inner">
+        <div class="hero__copy reveal">
+          <span class="eyebrow">Maison PICO &nbsp;·&nbsp; Heritage in Modern Form</span>
+          <h1 style="margin-top:18px">
+            Heirlooms<br/>
+            <em>refashioned</em><br/>
+            <span class="ampersand">into</span> tomorrow.
+          </h1>
+          <p class="lead">
+            We translate sentimental and artisanal fabrics — saris worn at weddings, brocades passed between hands, weaves that hold a country — into bomber jackets, sling bags and silk-lined essentials made for the modern wardrobe.
+          </p>
+          <div class="hero__cta">
+            <a class="btn btn--primary btn--lg" href="#/shop">Shop Collection <span class="arrow"></span></a>
+            <a class="btn btn--ghost btn--lg" href="#/customize">Customize With Your Fabric</a>
+          </div>
+          <div class="hero__meta">
+            <div class="hero__meta-item"><strong class="counter" data-to="14">0</strong><span>Atelier Houses</span></div>
+            <div class="hero__meta-item"><strong class="counter" data-to="40" data-suffix="+">0</strong><span>Master Artisans</span></div>
+            <div class="hero__meta-item"><strong class="counter" data-to="1.2" data-suffix="k" data-decimals="1">0</strong><span>Heirlooms Reborn</span></div>
+          </div>
+        </div>
+        <div class="hero__stack reveal" id="heroStack" aria-hidden="true">
+          <div class="hero__card hero__card--main">
+            <div class="media" data-aspect="4-5" data-label="model-1.webp">
+              <img src="./assets/logo/model/model-1.webp" alt="A model wearing a PICO bomber jacket" loading="eager" onerror="this.style.display='none'" />
+            </div>
+          </div>
+          <div class="hero__card hero__card--side">
+            <div class="media" data-aspect="3-4" data-label="model-2.webp" style="position:absolute;inset:0;aspect-ratio:auto">
+              <img src="./assets/logo/model/model-2.webp" alt="A model wearing a PICO heritage piece" loading="eager" onerror="this.style.display='none'" />
+            </div>
+          </div>
+          <div class="hero__card hero__card--mini">
+            <h4>“Memory, made wearable.”</h4>
+            <span>Atelier Notes &nbsp;·&nbsp; Vol. III</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MARQUEE -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track">
+        <span class="marquee__item">Banarasi Brocade <span></span></span>
+        <span class="marquee__item">Chanderi Silk <span></span></span>
+        <span class="marquee__item">Kanjivaram <span></span></span>
+        <span class="marquee__item">Patola <span></span></span>
+        <span class="marquee__item">Jamdani <span></span></span>
+        <span class="marquee__item">Mashru <span></span></span>
+        <span class="marquee__item">Ajrakh <span></span></span>
+        <span class="marquee__item">Banarasi Brocade <span></span></span>
+        <span class="marquee__item">Chanderi Silk <span></span></span>
+        <span class="marquee__item">Kanjivaram <span></span></span>
+        <span class="marquee__item">Patola <span></span></span>
+        <span class="marquee__item">Jamdani <span></span></span>
+        <span class="marquee__item">Mashru <span></span></span>
+        <span class="marquee__item">Ajrakh <span></span></span>
+      </div>
+    </div>
+
+    <!-- EDITORIAL INTRODUCTION -->
+    <section class="section">
+      <div class="container editorial">
+        <div class="editorial__copy reveal">
+          <span class="eyebrow">A House Built On Memory</span>
+          <h2 style="margin-top:18px">
+            We don't make<br/>
+            new things —<br/>
+            <span class="typewriter" data-text="we make |old things new.|" aria-label="we make old things new."></span>
+          </h2>
+          <p>
+            Every PICO piece begins as a textile with a past. A wedding sari folded into a trousseau. A grandmother's shawl, kept in a wooden chest. A length of silk gifted in another decade. We treat these fabrics with the reverence they deserve, and the modernity they ask for.
+          </p>
+          <p>
+            Tailored in our Mumbai atelier and finished by hand, each garment is a quiet conversation between heritage and today.
+          </p>
+          <div class="hero__cta" style="margin-top:32px">
+            <a class="btn btn--primary" href="#/story">Read Our Story <span class="arrow"></span></a>
+          </div>
+        </div>
+        <div class="editorial__media reveal">
+          <div class="badge">Est. 2026</div>
+          <div class="media" data-aspect="4-5" data-label="models-photoshoot1.webp">
+            <img src="./assets/logo/model/models-photoshoot1.webp" alt="PICO models in a heritage-fashion photoshoot" loading="lazy" onerror="this.style.display='none'" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURED CATEGORIES -->
+    <section class="section section--tight cats-section scroll-scene" data-scene="cats">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-head__title">
+            <span class="eyebrow">Ten Silhouettes</span>
+            <h2 style="margin-top:18px">The <em>Atelier</em> Catalogue</h2>
+          </div>
+          <div class="section-head__meta">
+            <p>A small, considered range. Every silhouette is a study in proportion — designed to host the textile, never to overwhelm it.</p>
+            <div class="cats-controls">
+              <a href="#/shop" class="cats-controls__link">Explore the Collection <span class="arrow"></span></a>
+              <div class="cats-nav">
+                <button class="cats-nav__btn" data-cats-prev aria-label="Previous">
+                  <svg viewBox="0 0 24 24"><line x1="20" y1="12" x2="6" y2="12"/><polyline points="11,6 5,12 11,18"/></svg>
+                </button>
+                <button class="cats-nav__btn" data-cats-next aria-label="Next">
+                  <svg viewBox="0 0 24 24"><line x1="4" y1="12" x2="18" y2="12"/><polyline points="13,6 19,12 13,18"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="cats-slider reveal" id="catsSlider">
+        <div class="cats-track" id="catsTrack" tabindex="0" aria-label="Featured categories">
+          <!-- categories rendered by JS -->
+        </div>
+        <div class="cats-progress" aria-hidden="true"><span id="catsProgressBar"></span></div>
+      </div>
+    </section>
+
+    <!-- FEATURED PRODUCTS -->
+    <section class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-head__title">
+            <span class="eyebrow">House Selections</span>
+            <h2 style="margin-top:18px">Pieces of <em>the Season</em></h2>
+          </div>
+          <div class="section-head__meta">
+            <p>A curated edit chosen by the head of atelier. Each ready-made piece is one of a small series — never mass-produced.</p>
+          </div>
+        </div>
+        <div class="products reveal" id="featuredProducts"></div>
+      </div>
+    </section>
+
+    <!-- CUSTOM SERVICE TEASER -->
+    <section class="custom-hero scroll-scene" data-scene="custom">
+      <div class="container custom-hero__inner">
+        <div class="custom-hero__copy">
+          <span class="eyebrow scene-el" data-start=".05" data-end=".20">The Signature Service</span>
+          <h1 style="margin-top:18px; font-size:clamp(36px,5vw,72px)">
+            <span class="h-line" data-start=".10" data-end=".28">Turn a fabric</span>
+            <span class="h-line" data-start=".22" data-end=".42">full of memory</span>
+            <span class="h-line" data-start=".34" data-end=".56">into a <em>modern heirloom.</em></span>
+          </h1>
+          <p class="scene-el" data-start=".48" data-end=".68">
+            Send us the sari your mother wore at her wedding. The brocade folded inside your grandfather's almirah. We will collect it from your doorstep, study it in the atelier, and reimagine it as a jacket, a sling, a clutch — a piece you'll wear for the next thirty years.
+          </p>
+          <div class="hero__cta scene-el" data-start=".60" data-end=".78" style="margin-top:32px">
+            <a class="btn btn--gold btn--lg" href="#/customize">Begin a Commission <span class="arrow"></span></a>
+            <a class="btn btn--ghost btn--lg" href="#/craft" style="color:var(--pico-ivory); border-color:rgba(255,242,227,.5)">How It Works</a>
+          </div>
+        </div>
+        <div class="custom-hero__art" data-parallax="0.16">
+          <div class="media" data-aspect="1-1" data-label="tie-model.webp">
+            <img src="./assets/logo/model/tie-model.webp" alt="A model styled in a PICO neck tie crafted from heritage silk" loading="lazy" onerror="this.style.display='none'" />
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="steps reveal">
+          <div class="step"><div class="step__num">01</div><h4>Choose your silhouette</h4><p>Start with the piece you'd love to wear — bomber, sling, neck tie or wallet.</p></div>
+          <div class="step"><div class="step__num">02</div><h4>Send your fabric</h4><p>Doorstep pickup across 14 cities. We treat it like an heirloom.</p></div>
+          <div class="step"><div class="step__num">03</div><h4>Atelier review</h4><p>Master tailors confirm suitability and share an honest note.</p></div>
+          <div class="step"><div class="step__num">04</div><h4>Crafted by hand</h4><p>Three to six weeks of slow, careful construction.</p></div>
+          <div class="step"><div class="step__num">05</div><h4>Delivered to you</h4><p>Wrapped in mulberry tissue, with the offcuts returned.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BRAND STORY -->
+    <section class="section">
+      <div class="container story">
+        <div class="story__media reveal">
+          <div class="media" data-aspect="4-5" data-label="model-new.webp">
+            <img src="./assets/logo/model/model-new.webp" alt="A PICO model wearing a heritage piece — a house built on the weight of cloth" loading="lazy" onerror="this.style.display='none'" />
+          </div>
+        </div>
+        <div class="story__copy reveal">
+          <span class="eyebrow">The PICO Mind</span>
+          <h2 style="margin-top:18px">A house built on the <em>weight</em> of cloth.</h2>
+          <p>
+            PICO was founded on a belief we still hold: that the most beautiful fashion isn't new at all — it is woven, gifted, kept, and remembered. We make pieces that can carry a story for the next generation.
+          </p>
+          <div class="story__pillars">
+            <div class="pillar"><h5>Heritage</h5><p>Textiles drawn from twelve weaving traditions.</p></div>
+            <div class="pillar"><h5>Memory</h5><p>Sentimental fabrics, honoured in modern form.</p></div>
+            <div class="pillar"><h5>Craft</h5><p>Hand-finished by named, paid-fairly artisans.</p></div>
+          </div>
+          <div style="margin-top:32px">
+            <a class="btn btn--primary" href="#/story">Inside The Atelier <span class="arrow"></span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CRAFT — assemble on scroll -->
+    <section class="section scroll-scene craft-scene" data-scene="craft">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-head__title">
+            <span class="eyebrow assemble-piece" data-from="left" data-start=".02" data-end=".22">The Craft</span>
+            <h2 class="assemble-piece" data-from="up" data-start=".06" data-end=".28" style="margin-top:18px">A <em>quiet</em> obsession with detail.</h2>
+          </div>
+          <div class="section-head__meta">
+            <p class="assemble-piece" data-from="right" data-start=".12" data-end=".34">Every PICO piece passes through four hands and seven inspections before it leaves the atelier.</p>
+          </div>
+        </div>
+        <div class="craft">
+          <div class="craft__card assemble-piece" data-from="left"  data-start=".20" data-end=".50" data-rotate="-4">
+            <div class="num">01 / Sourcing</div>
+            <h4>Honest origins</h4>
+            <p>We work with weaver clusters in Banaras, Kanchipuram, Patan, and Bhuj — and pay above market rates for slow weaves.</p>
+            <div class="media" data-label="tie-3.webp"><img src="./assets/logo/tie/tie-3.webp" alt="A close-up of woven silk — the start of every PICO commission" loading="lazy" onerror="this.style.display='none'" /></div>
+          </div>
+          <div class="craft__card assemble-piece" data-from="down"  data-start=".26" data-end=".56" data-rotate="2">
+            <div class="num">02 / Construction</div>
+            <h4>Hand-finished</h4>
+            <p>Linings in mulberry silk, bound seams, tailored interiors. Nothing is cut without a pattern study.</p>
+            <div class="media" data-label="bomber-3.webp"><img src="./assets/logo/bomber-jacket/bomber-3.webp" alt="A reversible bomber being hand-finished in the atelier" loading="lazy" onerror="this.style.display='none'" /></div>
+          </div>
+          <div class="craft__card assemble-piece" data-from="up"    data-start=".32" data-end=".62" data-rotate="-2">
+            <div class="num">03 / Hardware</div>
+            <h4>Brass &amp; bone</h4>
+            <p>Solid brass closures, bone buttons, hand-stitched bridle leather — fittings designed to age beautifully.</p>
+            <div class="media" data-label="wallet-2.webp"><img src="./assets/logo/wallet/wallet-2.webp" alt="Solid brass and bridle leather hardware on a PICO wallet" loading="lazy" onerror="this.style.display='none'" /></div>
+          </div>
+          <div class="craft__card assemble-piece" data-from="right" data-start=".38" data-end=".68" data-rotate="4">
+            <div class="num">04 / Finish</div>
+            <h4>Wrapped &amp; dispatched</h4>
+            <p>Each piece arrives in mulberry tissue, in a hand-stamped box, with a written care note from the maker.</p>
+            <div class="media" data-label="tote-4.webp"><img src="./assets/logo/tote/tote-4.webp" alt="A finished PICO tote ready to be wrapped in mulberry tissue" loading="lazy" onerror="this.style.display='none'" /></div>
+          </div>
+        </div>
+        <div class="craft-spine" aria-hidden="true"><span class="craft-spine__fill"></span></div>
+      </div>
+    </section>
+
+  </section>
+
+  <!-- ================================================================
+       VIEW: SHOP / CATALOG
+       ================================================================ -->
+  <section class="view" data-view="/shop" id="view-shop">
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-head__title">
+            <span class="eyebrow">The Catalogue</span>
+            <h2 style="margin-top:18px">Every piece in <em>the house.</em></h2>
+          </div>
+          <div class="section-head__meta">
+            <p>A small, intentional range. Filter by silhouette, or browse all.</p>
+          </div>
+        </div>
+        <div class="filters" id="catalogFilters" role="tablist" aria-label="Categories"></div>
+        <div class="products" id="catalogProducts"></div>
+      </div>
+    </section>
+  </section>
+
+  <!-- ================================================================
+       VIEW: PRODUCT DETAIL
+       ================================================================ -->
+  <section class="view" data-view="/product" id="view-product">
+    <section class="section">
+      <div class="container" id="productDetail">
+        <!-- rendered by JS -->
+      </div>
+    </section>
+  </section>
+
+  <!-- ================================================================
+       VIEW: CUSTOMIZE
+       ================================================================ -->
+  <section class="view" data-view="/customize" id="view-customize">
+
+    <section class="custom-hero">
+      <div class="container custom-hero__inner">
+        <div>
+          <span class="eyebrow">Custom Atelier &nbsp;·&nbsp; Bespoke Service</span>
+          <h1 style="margin-top:18px; font-size:clamp(36px,5vw,72px)">
+            A fabric you love.<br/>
+            A piece <em>built to outlive us.</em>
+          </h1>
+          <p>
+            Five steps, three to six weeks, one entirely yours. Begin a commission below — there is no charge until our atelier confirms your fabric is suitable.
+          </p>
+        </div>
+        <div class="custom-hero__art">
+          <div class="media" data-aspect="1-1" data-label="new-bag-model.webp">
+            <img src="./assets/logo/model/new-bag-model.webp" alt="A model carrying a PICO heritage bag — built to outlive us" loading="lazy" onerror="this.style.display='none'" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container custom-flow">
+
+        <aside class="custom-flow__sidebar">
+          <span class="eyebrow">Your Commission</span>
+          <h3 style="margin-top:14px">Five quiet steps</h3>
+          <div class="custom-flow__steps" id="customSteps">
+            <div class="custom-flow__step is-active" data-step="1"><div class="num">1</div><div><h5>The Silhouette</h5><p>What you'd like us to make.</p></div></div>
+            <div class="custom-flow__step" data-step="2"><div class="num">2</div><div><h5>The Fabric</h5><p>Photographs and notes.</p></div></div>
+            <div class="custom-flow__step" data-step="3"><div class="num">3</div><div><h5>The Story</h5><p>Why this piece matters.</p></div></div>
+            <div class="custom-flow__step" data-step="4"><div class="num">4</div><div><h5>The Pickup</h5><p>Where we collect from.</p></div></div>
+            <div class="custom-flow__step" data-step="5"><div class="num">5</div><div><h5>Confirmation</h5><p>We take it from here.</p></div></div>
+          </div>
+          <div class="divider" style="margin:24px 0"></div>
+          <p style="font-size:12px; color:var(--pico-mute)">No payment is taken at this stage. Our atelier will reach out within 48 hours of submission.</p>
+        </aside>
+
+        <div>
+          <form id="customForm" novalidate>
+
+            <!-- Step 1: Silhouette -->
+            <div class="flow-panel is-active" data-panel="1">
+              <span class="eyebrow">Step One</span>
+              <h2 style="margin:14px 0 12px; font-style:italic">Choose your <em>silhouette</em></h2>
+              <p class="muted" style="max-width:54ch">Pick the piece you'd like our atelier to craft from your fabric. You can change this later — your specialist will confirm during the call.</p>
+              <div class="choice-grid" id="customChoices" style="margin-top:24px"></div>
+              <div class="flow-actions">
+                <span></span>
+                <button type="button" class="btn btn--primary" data-flow-next>Continue <span class="arrow"></span></button>
+              </div>
+            </div>
+
+            <!-- Step 2: Fabric -->
+            <div class="flow-panel" data-panel="2">
+              <span class="eyebrow">Step Two</span>
+              <h2 style="margin:14px 0 12px; font-style:italic">Show us the <em>fabric</em></h2>
+              <p class="muted" style="max-width:54ch">A clear photograph in daylight is best. If the fabric is fragile, a description is fine — our specialist will confirm in person.</p>
+
+              <label class="upload" for="fabricUpload" style="margin-top:24px; display:block">
+                <svg viewBox="0 0 24 24"><path d="M12 16V4M6 10l6-6 6 6"/><path d="M4 20h16"/></svg>
+                <h4>Upload a fabric photograph</h4>
+                <p>JPG or PNG up to 10MB &nbsp;·&nbsp; we accept multiple images</p>
+                <input id="fabricUpload" type="file" accept="image/*" hidden />
+                <div class="media upload__preview" id="uploadPreview" data-aspect="4-3" data-label="your fabric"></div>
+              </label>
+
+              <div class="form-grid" style="margin-top:24px">
+                <div class="field">
+                  <label for="fabricType">Fabric type (best guess)</label>
+                  <select id="fabricType" class="select" name="fabricType">
+                    <option>Banarasi brocade</option>
+                    <option>Kanjivaram silk</option>
+                    <option>Chanderi silk</option>
+                    <option>Patola</option>
+                    <option>Mashru</option>
+                    <option>Jamdani</option>
+                    <option>Ajrakh / block print</option>
+                    <option>Other / not sure</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="fabricCondition">Condition</label>
+                  <select id="fabricCondition" class="select" name="fabricCondition">
+                    <option>Pristine</option>
+                    <option>Lightly worn</option>
+                    <option>Some damage</option>
+                    <option>Significant damage</option>
+                  </select>
+                </div>
+                <div class="field field--full">
+                  <label for="fabricNotes">Notes about the fabric</label>
+                  <textarea id="fabricNotes" class="textarea" placeholder="Tell us anything we should know — age, stains, sentimental areas to preserve."></textarea>
+                </div>
+              </div>
+
+              <div class="flow-actions">
+                <button type="button" class="btn btn--ghost" data-flow-prev>Back</button>
+                <button type="button" class="btn btn--primary" data-flow-next>Continue <span class="arrow"></span></button>
+              </div>
+            </div>
+
+            <!-- Step 3: Story -->
+            <div class="flow-panel" data-panel="3">
+              <span class="eyebrow">Step Three</span>
+              <h2 style="margin:14px 0 12px; font-style:italic">Tell us its <em>story</em></h2>
+              <p class="muted" style="max-width:54ch">This becomes part of the piece. We may quote a sentence on the inside label, with your permission.</p>
+
+              <div class="form-grid" style="margin-top:24px">
+                <div class="field field--full">
+                  <label for="storyTitle">A short title</label>
+                  <input id="storyTitle" class="input" type="text" placeholder="“My grandmother's wedding sari”" />
+                </div>
+                <div class="field field--full">
+                  <label for="storyBody">The story behind the fabric</label>
+                  <textarea id="storyBody" class="textarea" rows="6" placeholder="Where it came from, who wore it, why you'd like it remade."></textarea>
+                </div>
+                <label class="checkbox field--full" style="margin-top:8px">
+                  <input type="checkbox" id="quoteOk" />
+                  <span class="box"></span>
+                  <span>You may quote a line from my story on the inside label.</span>
+                </label>
+              </div>
+
+              <div class="flow-actions">
+                <button type="button" class="btn btn--ghost" data-flow-prev>Back</button>
+                <button type="button" class="btn btn--primary" data-flow-next>Continue <span class="arrow"></span></button>
+              </div>
+            </div>
+
+            <!-- Step 4: Pickup -->
+            <div class="flow-panel" data-panel="4">
+              <span class="eyebrow">Step Four</span>
+              <h2 style="margin:14px 0 12px; font-style:italic">Where shall we <em>collect</em>?</h2>
+              <p class="muted" style="max-width:54ch">A pickup specialist will be in touch within 48 hours to confirm the time. We collect across 14 cities.</p>
+
+              <div class="form-grid" style="margin-top:24px">
+                <div class="field"><label for="firstName">First name</label><input id="firstName" class="input" type="text" /></div>
+                <div class="field"><label for="lastName">Last name</label><input id="lastName" class="input" type="text" /></div>
+                <div class="field"><label for="email">Email</label><input id="email" class="input" type="email" /></div>
+                <div class="field"><label for="phone">Phone</label><input id="phone" class="input" type="tel" placeholder="+91" /></div>
+                <div class="field field--full"><label for="addr1">Address line 1</label><input id="addr1" class="input" type="text" /></div>
+                <div class="field"><label for="city">City</label>
+                  <select id="city" class="select">
+                    <option>Mumbai</option><option>Delhi</option><option>Bengaluru</option><option>Hyderabad</option>
+                    <option>Chennai</option><option>Kolkata</option><option>Pune</option><option>Ahmedabad</option>
+                    <option>Jaipur</option><option>Lucknow</option><option>Chandigarh</option><option>Goa</option>
+                    <option>Kochi</option><option>Indore</option>
+                  </select>
+                </div>
+                <div class="field"><label for="zip">Pincode</label><input id="zip" class="input" type="text" inputmode="numeric" /></div>
+                <div class="field field--full">
+                  <label>Pickup window</label>
+                  <div style="display:flex; gap:14px; flex-wrap:wrap; padding-top:6px">
+                    <label class="radio"><input type="radio" name="window" value="morning" checked /><span class="box"></span>Morning &nbsp;9–12</label>
+                    <label class="radio"><input type="radio" name="window" value="afternoon" /><span class="box"></span>Afternoon &nbsp;12–4</label>
+                    <label class="radio"><input type="radio" name="window" value="evening" /><span class="box"></span>Evening &nbsp;4–7</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="flow-actions">
+                <button type="button" class="btn btn--ghost" data-flow-prev>Back</button>
+                <button type="submit" class="btn btn--primary" id="customSubmit">Submit Commission <span class="arrow"></span></button>
+              </div>
+            </div>
+
+            <!-- Step 5: Confirmation -->
+            <div class="flow-panel" data-panel="5">
+              <div class="confirm">
+                <div class="confirm__seal">
+                  <svg viewBox="0 0 24 24"><path d="M5 13l4 4 10-10"/></svg>
+                </div>
+                <span class="eyebrow">Commission Received</span>
+                <h2 style="margin-top:14px">Thank you. Your fabric is in <em>safe hands.</em></h2>
+                <p class="lead">A pickup specialist from PICO will be in touch within 48 hours to confirm collection. Below is what happens next — quietly, carefully, and with the time it deserves.</p>
+
+                <div class="confirm__journey">
+                  <div class="step"><div class="step__num">01</div><h4>Pickup confirmation</h4><p>Within 48 hours, a specialist calls to schedule a pickup window.</p></div>
+                  <div class="step"><div class="step__num">02</div><h4>Doorstep collection</h4><p>Your fabric is collected and signed for in person.</p></div>
+                  <div class="step"><div class="step__num">03</div><h4>Atelier review</h4><p>Our master tailors confirm suitability — and share an honest note.</p></div>
+                  <div class="step"><div class="step__num">04</div><h4>Crafted by hand</h4><p>Three to six weeks of careful, single-piece production.</p></div>
+                  <div class="step"><div class="step__num">05</div><h4>Wrapped &amp; sent</h4><p>Returned with offcuts, in mulberry tissue, by a courier you sign for.</p></div>
+                </div>
+
+                <div class="confirm__ref">
+                  Your reference <strong id="refCode">PCO-00000</strong>
+                </div>
+
+                <div style="margin-top:36px; display:flex; gap:12px; justify-content:center; flex-wrap:wrap">
+                  <a class="btn btn--primary" href="#/">Return Home</a>
+                  <a class="btn btn--ghost" href="#/dashboard">View Mock Atelier OS</a>
+                </div>
+              </div>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </section>
+  </section>
+
+  <!-- ================================================================
+       VIEW: STORY
+       ================================================================ -->
+  <section class="view" data-view="/story" id="view-story">
+    <section class="section">
+      <div class="container">
+        <div style="max-width:760px">
+          <span class="eyebrow">The PICO Story</span>
+          <h1 style="margin-top:18px; font-style:italic">A house built on the <em>weight</em> of cloth.</h1>
+          <p class="lead" style="margin-top:24px">PICO began with a sari folded inside a wooden almirah — a wedding gift, never worn, kept for thirty years. We saw a question in it: how do we let the fabric speak again, in a form our daughters might wear on a Tuesday?</p>
+        </div>
+        <div class="media reveal" data-aspect="16-9" data-label="models-photoshoot1.webp" style="margin-top:48px">
+          <img src="./assets/logo/model/models-photoshoot1.webp" alt="The PICO atelier — a quiet practice of textiles, hands and time" loading="lazy" onerror="this.style.display='none'" />
+        </div>
+      </div>
+    </section>
+    <section class="section section--tight">
+      <div class="container story">
+        <div class="story__media">
+          <div class="media" data-aspect="4-5" data-label="model-2.webp"><img src="./assets/logo/model/model-2.webp" alt="A PICO model — heritage textile in modern form" loading="lazy" onerror="this.style.display='none'" /></div>
+        </div>
+        <div class="story__copy">
+          <h2 style="font-style:italic">Why we exist</h2>
+          <p>We believe the most beautiful textiles in the world have already been woven. They sit in trunks, between layers of muslin, in the wardrobes of mothers and grandmothers. PICO is the bridge between those textiles and the wardrobe of a modern person who wants to wear them — not preserve them.</p>
+          <p>We are slow, intentionally. We make small numbers and we put names on labels. We pay our weavers fairly. We don't promise sustainability as a marketing line — we promise it as a working method.</p>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-head__title">
+            <span class="eyebrow">House Principles</span>
+            <h2 style="margin-top:18px">Six quiet <em>commitments</em></h2>
+          </div>
+        </div>
+        <div class="craft">
+          <div class="craft__card"><div class="num">I</div><h4>Honour the textile</h4><p>The fabric leads. The silhouette serves it.</p></div>
+          <div class="craft__card"><div class="num">II</div><h4>Pay above market</h4><p>For the weavers, the cutters, the finishers.</p></div>
+          <div class="craft__card"><div class="num">III</div><h4>Slow over fast</h4><p>Three to six weeks per commission. Always.</p></div>
+          <div class="craft__card"><div class="num">IV</div><h4>Name the maker</h4><p>Every piece is signed by the person who finished it.</p></div>
+          <div class="craft__card"><div class="num">V</div><h4>Return the offcuts</h4><p>What's yours stays yours. We send the remnants back.</p></div>
+          <div class="craft__card"><div class="num">VI</div><h4>Repair, forever</h4><p>Bring it back any year, any decade. We mend.</p></div>
+          <div class="craft__card"><div class="num">VII</div><h4>Document everything</h4><p>Each piece comes with the maker's note and the textile's origin.</p></div>
+          <div class="craft__card"><div class="num">VIII</div><h4>Quiet over loud</h4><p>No logos on the outside. Heritage, never branded.</p></div>
+        </div>
+      </div>
+    </section>
+  </section>
+
+  <!-- ================================================================
+       VIEW: CRAFT
+       ================================================================ -->
+  <section class="view" data-view="/craft" id="view-craft">
+    <section class="section">
+      <div class="container">
+        <div style="max-width:760px">
+          <span class="eyebrow">The Craft</span>
+          <h1 style="margin-top:18px; font-style:italic">From <em>cloth</em> to keepsake.</h1>
+          <p class="lead" style="margin-top:24px">A PICO commission moves through four hands and seven inspections. Below is what happens to your fabric, in order, after it leaves your home.</p>
+        </div>
+      </div>
+    </section>
+    <section class="section section--tight">
+      <div class="container">
+        <div class="craft">
+          <div class="craft__card"><div class="num">01</div><h4>Receiving</h4><p>Every fabric is photographed, weighed, and assigned an atelier number on arrival.</p></div>
+          <div class="craft__card"><div class="num">02</div><h4>Suitability review</h4><p>Master tailor inspects weave strength, fibre direction, and damage. We send an honest note.</p></div>
+          <div class="craft__card"><div class="num">03</div><h4>Pattern study</h4><p>Pattern is mapped to honour the motifs — borders preserved, palla aligned.</p></div>
+          <div class="craft__card"><div class="num">04</div><h4>Cutting</h4><p>Hand-cut by senior cutters. Never on a table you've not seen.</p></div>
+          <div class="craft__card"><div class="num">05</div><h4>Construction</h4><p>Bound seams, mulberry silk lining, hand-finished interiors.</p></div>
+          <div class="craft__card"><div class="num">06</div><h4>Hardware</h4><p>Solid brass, bone, bridle leather. Made to age.</p></div>
+          <div class="craft__card"><div class="num">07</div><h4>Quality check</h4><p>Seven-point inspection. Two senior makers must sign off.</p></div>
+          <div class="craft__card"><div class="num">08</div><h4>Wrap &amp; send</h4><p>Mulberry tissue, hand-stamped box, the maker's note, the offcuts returned.</p></div>
+        </div>
+      </div>
+    </section>
+    <section class="section section--tight">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-head__title">
+            <span class="eyebrow">After-Care</span>
+            <h2 style="margin-top:18px">How to <em>live with</em> a PICO piece.</h2>
+          </div>
+        </div>
+        <div class="story__pillars" style="grid-template-columns:repeat(4,1fr)">
+          <div class="pillar"><h5>Wear it.</h5><p>Heirlooms grow more beautiful with use. Don't archive ours.</p></div>
+          <div class="pillar"><h5>Brush, don't wash.</h5><p>Soft horsehair brush, in the direction of the weave.</p></div>
+          <div class="pillar"><h5>Hang in muslin.</h5><p>Breathable fabric beats plastic, every season.</p></div>
+          <div class="pillar"><h5>Send it back.</h5><p>For mending, for refresh, for re-lining. Forever.</p></div>
+        </div>
+      </div>
+    </section>
+  </section>
+
+  <!-- ================================================================
+       VIEW: CART / CHECKOUT
+       ================================================================ -->
+  <section class="view" data-view="/cart" id="view-cart">
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-head__title">
+            <span class="eyebrow">Your Bag</span>
+            <h2 style="margin-top:18px">A small, considered <em>order</em>.</h2>
+          </div>
+          <div class="section-head__meta">
+            <p>Free, signed-for shipping worldwide. Returns within 14 days. Lifetime mending on every PICO piece.</p>
+          </div>
+        </div>
+        <div class="cart-grid">
+          <div id="cartLines"></div>
+          <aside class="summary">
+            <h3>Order summary</h3>
+            <div class="summary__row"><span>Subtotal</span><span class="val" id="sumSubtotal">₹0</span></div>
+            <div class="summary__row"><span>Shipping</span><span class="val">Complimentary</span></div>
+            <div class="summary__row"><span>Atelier handling</span><span class="val">Included</span></div>
+            <div class="summary__row total"><span>Total</span><span class="val" id="sumTotal">₹0</span></div>
+
+            <div class="summary__form">
+              <div class="field field--full"><label for="ckEmail">Email</label><input id="ckEmail" class="input" type="email" /></div>
+              <div class="field"><label for="ckFirst">First name</label><input id="ckFirst" class="input" type="text" /></div>
+              <div class="field"><label for="ckLast">Last name</label><input id="ckLast" class="input" type="text" /></div>
+              <div class="field field--full"><label for="ckAddr">Shipping address</label><input id="ckAddr" class="input" type="text" /></div>
+              <div class="field"><label for="ckCity">City</label><input id="ckCity" class="input" type="text" /></div>
+              <div class="field"><label for="ckZip">Pincode</label><input id="ckZip" class="input" type="text" inputmode="numeric" /></div>
+            </div>
+
+            <div style="margin-top:18px">
+              <span class="eyebrow">Payment</span>
+              <div class="payments" id="payMethods" style="margin-top:10px">
+                <div class="pay is-active" data-pay="card">Card</div>
+                <div class="pay" data-pay="upi">UPI</div>
+                <div class="pay" data-pay="wire">Wire</div>
+              </div>
+            </div>
+
+            <button class="btn btn--primary btn--block btn--lg" style="margin-top:18px" id="ckBtn">Place Order <span class="arrow"></span></button>
+
+            <div class="trust">
+              <span><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-9"/></svg> Signed-for delivery</span>
+              <span><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-9"/></svg> Lifetime mending</span>
+              <span><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-9"/></svg> 14-day returns</span>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </section>
+
+  <!-- ================================================================
+       VIEW: DASHBOARD (Atelier OS — mock)
+       ================================================================ -->
+  <section class="view" data-view="/dashboard" id="view-dashboard">
+    <div class="dash">
+      <aside class="dash__side">
+        <div class="dash__brand">
+          <span class="brand-mark__logo">PICO</span>
+          <small>Atelier OS</small>
+        </div>
+        <div class="dash__nav-section">Workspace</div>
+        <nav class="dash__nav" id="dashNav">
+          <a href="#/dashboard" class="dash__nav-item is-active" data-dash="home">
+            <svg viewBox="0 0 24 24"><path d="M3 12l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Overview</a>
+          <a href="#/dashboard?v=requests" class="dash__nav-item" data-dash="requests">
+            <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16"/><line x1="4" y1="9" x2="20" y2="9"/><line x1="9" y1="9" x2="9" y2="20"/></svg>Requests</a>
+          <a href="#/dashboard?v=schedule" class="dash__nav-item" data-dash="schedule">
+            <svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="16" rx="1"/><line x1="4" y1="10" x2="20" y2="10"/><line x1="9" y1="3" x2="9" y2="7"/><line x1="15" y1="3" x2="15" y2="7"/></svg>Pickups</a>
+          <a href="#/dashboard?v=workflow" class="dash__nav-item" data-dash="workflow">
+            <svg viewBox="0 0 24 24"><path d="M4 12h16"/><circle cx="6" cy="12" r="2"/><circle cx="18" cy="12" r="2"/><circle cx="12" cy="12" r="2"/></svg>Workflow</a>
+        </nav>
+        <div class="dash__nav-section">House</div>
+        <nav class="dash__nav">
+          <a href="#/" class="dash__nav-item">
+            <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>Back to site</a>
+        </nav>
+      </aside>
+
+      <div class="dash__main" id="dashMain">
+        <!-- rendered by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       VIEW: DESIGN SYSTEM PROOF
+       ================================================================ -->
+  <section class="view" data-view="/system" id="view-system">
+    <section class="section">
+      <div class="container ds-proof">
+        <span class="eyebrow">Design System Proof</span>
+        <h1 style="margin-top:18px; font-style:italic">PICO <em>tokens</em> &amp; components.</h1>
+        <p class="lead" style="margin-top:18px; max-width:60ch">A live reference of the brand's foundational tokens — palette, typography, buttons, fields, cards, and dashboard widgets. Use this to verify visual consistency before final review.</p>
+
+        <h3>Palette</h3>
+        <div class="ds-swatches">
+          <div class="ds-swatch"><div class="ds-swatch__color" style="background:var(--pico-ivory); border-bottom:1px solid var(--pico-line)"></div><div class="ds-swatch__meta"><strong>Ivory</strong><small>#FFF2E3 · BG</small></div></div>
+          <div class="ds-swatch"><div class="ds-swatch__color" style="background:var(--pico-maroon)"></div><div class="ds-swatch__meta"><strong>Maroon</strong><small>#581919 · CTA</small></div></div>
+          <div class="ds-swatch"><div class="ds-swatch__color" style="background:var(--pico-gold)"></div><div class="ds-swatch__meta"><strong>Gold</strong><small>#C7A96D · Accent</small></div></div>
+          <div class="ds-swatch"><div class="ds-swatch__color" style="background:var(--pico-ink)"></div><div class="ds-swatch__meta"><strong>Ink</strong><small>#171717 · Text</small></div></div>
+          <div class="ds-swatch"><div class="ds-swatch__color" style="background:var(--pico-mute)"></div><div class="ds-swatch__meta"><strong>Mute</strong><small>#6B6B6B · Muted</small></div></div>
+          <div class="ds-swatch"><div class="ds-swatch__color" style="background:var(--pico-white); border:1px solid var(--pico-line)"></div><div class="ds-swatch__meta"><strong>White</strong><small>#FFFFFF · Surface</small></div></div>
+        </div>
+
+        <h3>Typography</h3>
+        <div class="ds-block">
+          <h1 style="font-size:64px">PICO &mdash; <em style="color:var(--pico-maroon)">Heirlooms</em></h1>
+          <h2 style="margin-top:18px">A house built on the <em style="color:var(--pico-maroon); font-style:normal">weight of cloth</em>.</h2>
+          <h3 style="margin-top:18px">Editorial subheading in Clast / Cormorant.</h3>
+          <p style="margin-top:14px; max-width:60ch">Body copy is set in Montserrat at 15px / 1.55. The display family carries headlines and the occasional pullquote — italics are used as a punctuation device, not a default.</p>
+          <p class="eyebrow" style="margin-top:18px">Eyebrow Label · Tracked &amp; Uppercased</p>
+        </div>
+
+        <h3>Buttons</h3>
+        <div class="ds-block ds-row">
+          <button class="btn btn--primary">Primary <span class="arrow"></span></button>
+          <button class="btn btn--ghost">Ghost</button>
+          <button class="btn btn--gold">Gold</button>
+          <button class="btn btn--ink">Ink</button>
+          <button class="btn btn--primary btn--sm">Small</button>
+          <button class="btn btn--primary btn--lg">Large</button>
+        </div>
+
+        <h3>Form controls</h3>
+        <div class="ds-block">
+          <div class="form-grid">
+            <div class="field"><label>First name</label><input class="input" placeholder="Aanya" /></div>
+            <div class="field"><label>Email</label><input class="input" placeholder="aanya@pico.studio" /></div>
+            <div class="field field--full"><label>Story</label><textarea class="textarea" placeholder="Tell us about the fabric…"></textarea></div>
+          </div>
+          <div class="ds-row" style="margin-top:18px">
+            <label class="checkbox"><input type="checkbox" checked /><span class="box"></span>Quote my story on the label</label>
+            <label class="radio"><input type="radio" name="ds-r" checked /><span class="box"></span>Morning</label>
+            <label class="radio"><input type="radio" name="ds-r" /><span class="box"></span>Afternoon</label>
+            <span class="tag">In Atelier</span>
+            <span class="tag tag--gold">Premium</span>
+            <span class="tag tag--maroon">Hot</span>
+            <span class="tag tag--ink">Sold Out</span>
+          </div>
+        </div>
+
+        <h3>Product card</h3>
+        <div class="products" style="grid-template-columns:repeat(2,1fr); max-width:640px">
+          <article class="product">
+            <div class="media" data-aspect="3-4" data-label="bomber.jpg"><img src="./assets/bomber-jacket-1.jpg" alt="" onerror="this.style.display='none'" /></div>
+            <div class="product__body">
+              <div>
+                <div class="product__name">Banaras Bomber</div>
+                <div class="product__cat">Bomber Jacket</div>
+              </div>
+              <div class="product__price"><span class="currency">₹</span>48,500</div>
+            </div>
+          </article>
+          <article class="product">
+            <div class="media" data-aspect="3-4" data-label="sling.jpg"><img src="./assets/sling-bag-1.jpg" alt="" onerror="this.style.display='none'" /></div>
+            <div class="product__body">
+              <div>
+                <div class="product__name">Patola Sling</div>
+                <div class="product__cat">Sling Bag</div>
+              </div>
+              <div class="product__price"><span class="currency">₹</span>22,000</div>
+            </div>
+          </article>
+        </div>
+
+        <h3>Dashboard widgets</h3>
+        <div class="kpis">
+          <div class="kpi"><div class="kpi__label">Total Requests</div><div class="kpi__value">128</div><div class="kpi__delta">▲ 12 this week</div><div class="kpi__bar"><span style="width:78%"></span></div></div>
+          <div class="kpi"><div class="kpi__label">Pending Pickups</div><div class="kpi__value">14</div><div class="kpi__delta gold">5 today</div><div class="kpi__bar"><span style="width:36%; background:var(--pico-gold)"></span></div></div>
+          <div class="kpi"><div class="kpi__label">In Atelier</div><div class="kpi__value">42</div><div class="kpi__delta">Avg. 22 days</div><div class="kpi__bar"><span style="width:58%"></span></div></div>
+        </div>
+        <div style="margin-top:24px">
+          <span class="status" data-status="submitted">Submitted</span>
+          <span class="status" data-status="pickup">Pickup Scheduled</span>
+          <span class="status" data-status="collected">Collected</span>
+          <span class="status" data-status="review">In Review</span>
+          <span class="status" data-status="production">In Production</span>
+          <span class="status" data-status="qc">Quality Check</span>
+          <span class="status" data-status="ready">Ready to Ship</span>
+        </div>
+      </div>
+    </section>
+  </section>
+
+</main>
+
+<!-- ================================================================
+     FOOTER
+     ================================================================ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <div class="brand-mark brand-mark--gold" aria-label="PICO">
+          <img class="brand-mark__img" src="./assets/logo/PICO%20LOGO.png" alt="PICO" width="80" height="72" style="height:72px" onerror="this.classList.add('is-failed')" />
+          <span class="brand-mark__logo">PICO</span>
+        </div>
+        <p>Heritage textiles, refashioned for a modern wardrobe. Made slowly in Mumbai &amp; sent gently across the world.</p>
+        <form class="footer__news" onsubmit="event.preventDefault(); window.PICO.toast('Thank you — first letter on its way.')">
+          <input type="email" required placeholder="Your email — for the atelier letter" aria-label="Email" />
+          <button type="submit">Subscribe</button>
+        </form>
+      </div>
+      <div>
+        <h4>House</h4>
+        <ul>
+          <li><a href="#/story">Our Story</a></li>
+          <li><a href="#/craft">The Craft</a></li>
+          <li><a href="#/customize">Custom Atelier</a></li>
+          <li><a href="#/dashboard">Atelier OS</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="#/shop?cat=Bomber">Bomber Jackets</a></li>
+          <li><a href="#/shop?cat=Windsheeter">Windsheeters</a></li>
+          <li><a href="#/shop?cat=Sling">Sling Bags</a></li>
+          <li><a href="#/shop?cat=Clutch">Clutches</a></li>
+          <li><a href="#/shop?cat=Wallet">Wallets</a></li>
+          <li><a href="#/shop?cat=Tie">Neck Ties</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Care</h4>
+        <ul>
+          <li><a href="#/craft">After-care Guide</a></li>
+          <li><a href="#/craft">Lifetime Mending</a></li>
+          <li><a href="#/craft">Sourcing Promise</a></li>
+          <li><a href="#/system">Design System</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>&copy; 2026 PICO Maison Pvt Ltd</span>
+      <span>Mumbai · Banaras · Patan · Kanchipuram</span>
+    </div>
+  </div>
+</footer>
+
+<!-- TOAST -->
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<!-- ================================================================
+     SCRIPTS
+     ================================================================ -->
+<script>
+(function(){
+'use strict';
+
+/* -----------------------------------------------------------------
+   STATE / DATA
+   ----------------------------------------------------------------- */
+const PRODUCTS = [
+  { id:'banaras-bomber',    name:'Banaras Bomber',     cat:'Bomber',       category:'Bomber Jacket', price:48500, img:'./assets/logo/bomber-jacket/bomber-1.webp',
+    copy:'A reversible bomber cut from a 40-year-old Banarasi sari. Mulberry silk lining, brass closures.',
+    story:'The original sari was woven in 1984 in Pili Kothi, Banaras — saved for a wedding that didn\'t happen, then folded away.', },
+  { id:'kanjivaram-bomber', name:'Kanjivaram Bomber',  cat:'Bomber',       category:'Bomber Jacket', price:54000, img:'./assets/logo/bomber-jacket/bomber-2.webp',
+    copy:'Deep maroon Kanjivaram with gold zari piping. Tailored, lined in habotai silk.',
+    story:'A Kanjivaram drape from a temple town, with gold-zari motifs preserved at the back panel.' },
+  { id:'patola-windsheeter', name:'Patola Windsheeter', cat:'Windsheeter', category:'Windsheeter', price:38000, img:'./assets/logo/wind-sheeter/wind-1.webp',
+    copy:'A double-ikat Patola windsheeter for the in-between weather. Fully waterproofed lining.',
+    story:'Patola from Patan, where a single sari can take a year to weave. Waterproofed without losing the hand.' },
+  { id:'jamdani-windsheeter', name:'Jamdani Windsheeter', cat:'Windsheeter', category:'Windsheeter', price:34000, img:'./assets/logo/wind-sheeter/wind-2.webp',
+    copy:'Featherweight Jamdani over a technical shell. Travels beautifully.',
+    story:'Jamdani — the muslin of Dhaka — re-engineered for a wardrobe that flies.' },
+  { id:'patola-sling', name:'Patola Sling', cat:'Sling', category:'Sling Bag', price:22000, img:'./assets/logo/sling--bag/sling-1.webp',
+    copy:'Crossbody sling in Patola silk and bridle leather.',
+    story:'Patola off-cuts from our atelier floor — never wasted, always honoured.' },
+  { id:'mashru-sling', name:'Mashru Sling', cat:'Sling', category:'Sling Bag', price:19500, img:'./assets/logo/sling--bag/sling-2.webp',
+    copy:'A weekend sling cut from striped Mashru silk, brass D-rings.',
+    story:'Mashru — once made for those forbidden silk against skin. A textile of clever rebellion.' },
+  { id:'kanjivaram-sling', name:'Kanjivaram Sling', cat:'Sling', category:'Sling Bag', price:24000, img:'./assets/logo/sling--bag/sling-3.webp',
+    copy:'A structured crossbody in Kanjivaram silk with bridle leather strap and bone toggle.',
+    story:'Kanjivaram woven in Pillaiyar Patti — gold-zari preserved at the flap, the rest a quiet temple-red.' },
+  { id:'chanderi-sling', name:'Chanderi Crossbody', cat:'Sling', category:'Sling Bag', price:21000, img:'./assets/logo/sling--bag/sling-4.webp',
+    copy:'A featherweight crossbody in pista Chanderi, mulberry silk lining, bone clasp.',
+    story:'Chanderi — light as a whisper, finished to last a generation.' },
+  { id:'banaras-clutch', name:'Banaras Evening Clutch', cat:'Clutch', category:'Clutch', price:18000, img:'./assets/logo/clutch/clutch-1.webp',
+    copy:'A slim evening clutch, lined in habotai. For long dinners and longer conversations.',
+    story:'A length of Banarasi brocade, folded into a quiet evening piece.' },
+  { id:'ajrakh-clutch', name:'Ajrakh Day Clutch', cat:'Clutch', category:'Clutch', price:14500, img:'./assets/logo/clutch/clutch-2.webp',
+    copy:'Block-printed Ajrakh, hand-finished, brass kiss-lock.',
+    story:'Ajrakh from Bhuj — printed in indigo and madder, fixed by sun.' },
+  { id:'mashru-clutch', name:'Mashru Heritage Clutch', cat:'Clutch', category:'Clutch', price:16500, img:'./assets/logo/clutch/clutch-3.webp',
+    copy:'A long-line clutch in striped Mashru, brass kiss-lock, hand-rolled edges.',
+    story:'Mashru — the textile of clever rebellion — folded into something quietly modern.' },
+  { id:'chanderi-wallet', name:'Chanderi Bi-fold Wallet', cat:'Wallet', category:'Wallet', price:9500, img:'./assets/logo/wallet/wallet-1.webp',
+    copy:'Lightweight wallet in Chanderi silk, six card slots, lined in bridle leather.',
+    story:'Chanderi — light as a whisper, finished in leather strong as a handshake.' },
+  { id:'leather-wallet', name:'Atelier Card Holder', cat:'Wallet', category:'Wallet', price:6800, img:'./assets/logo/wallet/wallet-2.webp',
+    copy:'Slim card holder, hand-stitched bridle, Mashru lining.',
+    story:'A card holder built from bridle leather and a length of Mashru silk.' },
+  { id:'silk-tie', name:'Banaras Silk Tie', cat:'Tie', category:'Neck Tie', price:6500, img:'./assets/logo/tie/tie-1.webp',
+    copy:'A 7-fold tie cut from Banarasi silk. Tipped, hand-rolled.',
+    story:'Cut from a single panel of Banarasi silk — a pattern that wraps once and stays a lifetime.' },
+  { id:'patola-tie', name:'Patola Silk Tie', cat:'Tie', category:'Neck Tie', price:7200, img:'./assets/logo/tie/tie-2.webp',
+    copy:'Slim Patola tie, double-ikat, hand-finished tip.',
+    story:'A small canvas of Patola — geometric, deliberate, unmistakable.' },
+  { id:'banaras-tote', name:'Banaras Heritage Tote', cat:'Tote', category:'Tote', price:24500, img:'./assets/logo/tote/tote-2.webp',
+    copy:'A roomy day tote in Banarasi brocade, lined in habotai with bridle leather handles.',
+    story:'Cut from a deep-burgundy Banarasi sari woven for a wedding in 1979 — preserved at the borders, made for a Tuesday.' },
+  { id:'patola-tote',  name:'Patola Day Tote',       cat:'Tote', category:'Tote', price:21000, img:'./assets/logo/tote/tote-3.webp',
+    copy:'A structured tote with double-ikat Patola panels, bone toggle, mulberry silk lining.',
+    story:'Patola — the only sari in the world woven identically on both sides — made into a tote that asks no questions.' },
+  { id:'jamdani-tote', name:'Jamdani Soft Tote',     cat:'Tote', category:'Tote', price:19500, img:'./assets/logo/bags/bag-4.webp',
+    copy:'An unstructured everyday tote in pale Jamdani, leather base, magnetic close.',
+    story:'Dhaka Jamdani — the muslin once known as woven air — made into a bag that disappears into the day.' },
+  { id:'mashru-tote',  name:'Mashru Weekend Tote',   cat:'Tote', category:'Tote', price:22500, img:'./assets/logo/bags/bag-5.webp',
+    copy:'A generous weekender in striped Mashru, full bridle leather trim, brass feet.',
+    story:'Built for the long Friday — Mashru on the outside, mulberry silk within.' },
+];
+
+const CATEGORIES = [
+  { key:'Bomber',       label:'Bomber Jackets', img:'./assets/logo/bomber-jacket/bomber-1.webp',  count:'12 pieces' },
+  { key:'Windsheeter',  label:'Windsheeters',   img:'./assets/logo/wind-sheeter/wind-1.webp',     count:'8 pieces'  },
+  { key:'Sling',        label:'Sling Bags',     img:'./assets/logo/sling--bag/sling-1.webp',      count:'14 pieces' },
+  { key:'Clutch',       label:'Clutches',       img:'./assets/logo/clutch/clutch-1.webp',         count:'9 pieces'  },
+  { key:'Wallet',       label:'Wallets',        img:'./assets/logo/wallet/wallet-1.webp',         count:'11 pieces' },
+  { key:'Tie',          label:'Neck Ties',      img:'./assets/logo/tie/tie-1.webp',               count:'7 pieces'  },
+  { key:'Scarf',        label:'Silk Scarves',   img:'./assets/logo/bags/bag-2.webp',              count:'6 pieces'  },
+  { key:'Pocket',       label:'Pocket Squares', img:'./assets/logo/tie/tie-4.webp',               count:'10 pieces' },
+  { key:'Cardholder',   label:'Card Holders',   img:'./assets/logo/wallet/wallet-3.webp',         count:'5 pieces'  },
+  { key:'Tote',         label:'Totes',          img:'./assets/logo/tote/tote-1.webp',             count:'8 pieces'  },
+];
+
+// Mock dashboard data
+const REQUESTS = [
+  { ref:'PCO-1042', name:'Aanya Mehta', city:'Mumbai',    silhouette:'Banaras Bomber',  date:'2026-04-29', status:'submitted',  thumb:'./assets/logo/bomber-jacket/bomber-3.webp', story:'My grandmother\'s wedding sari, kept in a wooden trunk in Pune since 1969. Banarasi silk, with gold zari at the palla. We\'d love to remake it as a bomber my brother could wear.', address:'17 Carmichael Rd, Mumbai 400026', partner:'PICO Mumbai', timeline:'TBD after review' },
+  { ref:'PCO-1041', name:'Rohan Verma', city:'Delhi',     silhouette:'Patola Sling',    date:'2026-04-28', status:'pickup',     thumb:'./assets/logo/sling--bag/sling-1.webp', story:'A length of Patola my mother bought in Patan in 1992. Never stitched. We\'d like a small sling in the green border.', address:'B-12, Defence Colony, New Delhi 110024', partner:'PICO Delhi', timeline:'4–6 weeks from collection' },
+  { ref:'PCO-1040', name:'Meera Iyer',  city:'Bengaluru', silhouette:'Kanjivaram Bomber', date:'2026-04-27', status:'collected', thumb:'./assets/logo/bomber-jacket/bomber-2.webp', story:'A Kanjivaram from my mother-in-law\'s wedding. The colours have softened. We\'d love a reversible bomber.', address:'42 Lavelle Rd, Bengaluru 560001', partner:'PICO South', timeline:'5 weeks · est. 6 Jun' },
+  { ref:'PCO-1039', name:'Karan Shah',  city:'Ahmedabad', silhouette:'Ajrakh Clutch',   date:'2026-04-26', status:'review',     thumb:'./assets/logo/clutch/clutch-2.webp', story:'An Ajrakh print my father bought from Bhuj after the earthquake. Indigo and madder. Day clutch please.', address:'Bungalow 7, Bodakdev, Ahmedabad 380054', partner:'PICO West', timeline:'Awaiting suitability note' },
+  { ref:'PCO-1038', name:'Naina Bose',  city:'Kolkata',   silhouette:'Jamdani Windsheeter', date:'2026-04-25', status:'production', thumb:'./assets/logo/wind-sheeter/wind-3.webp', story:'A Dhaka Jamdani from my Didi\'s trousseau. Pale grey, heavy palla. A windsheeter that travels.', address:'18 Hindustan Park, Kolkata 700029', partner:'PICO East', timeline:'In atelier · ETA 22 May' },
+  { ref:'PCO-1037', name:'Vikram Rao',  city:'Chennai',   silhouette:'Banaras Tie',     date:'2026-04-23', status:'qc',         thumb:'./assets/logo/tie/tie-1.webp', story:'Banarasi silk gifted at my engagement, never worn. A 7-fold tie for the wedding day.', address:'21 Boat Club Rd, Chennai 600028', partner:'PICO South', timeline:'In QC · ships 5 May' },
+  { ref:'PCO-1036', name:'Isha Singh',  city:'Pune',      silhouette:'Mashru Sling',    date:'2026-04-22', status:'ready',      thumb:'./assets/logo/bags/bag-1.webp', story:'Striped Mashru I bought myself in Bhuj five years ago. Always meant to make it into a bag.', address:'Koregaon Park, Pune 411001', partner:'PICO West', timeline:'Ready · dispatching today' },
+  { ref:'PCO-1035', name:'Devika Nair', city:'Kochi',     silhouette:'Chanderi Wallet', date:'2026-04-20', status:'production', thumb:'./assets/logo/wallet/wallet-2.webp', story:'My amma\'s Chanderi, a soft pista green. A wallet I can carry every day.', address:'12 Rose Gardens, Kochi 682036', partner:'PICO South', timeline:'In atelier · ETA 30 May' },
+];
+
+const WORKFLOW = [
+  { key:'submitted',  label:'Submitted' },
+  { key:'pickup',     label:'Pickup' },
+  { key:'collected',  label:'Collected' },
+  { key:'review',     label:'Review' },
+  { key:'production', label:'Production' },
+  { key:'qc',         label:'Quality' },
+  { key:'ready',      label:'Ready' },
+];
+
+const STATE = {
+  cart: [],
+  customStep: 1,
+  customSelected: 'banaras-bomber',
+};
+
+/* -----------------------------------------------------------------
+   HELPERS
+   ----------------------------------------------------------------- */
+const $  = (s, p=document) => p.querySelector(s);
+const $$ = (s, p=document) => Array.from(p.querySelectorAll(s));
+const fmt = (n) => '₹' + n.toLocaleString('en-IN');
+const esc = (s) => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+function toast(msg){
+  const t = $('#toast');
+  t.textContent = msg;
+  t.classList.add('is-on');
+  clearTimeout(toast._t);
+  toast._t = setTimeout(()=> t.classList.remove('is-on'), 2400);
+}
+
+/* -----------------------------------------------------------------
+   ROUTING
+   ----------------------------------------------------------------- */
+function parseHash(){
+  const raw = (location.hash || '#/').slice(1);
+  const [path, query=''] = raw.split('?');
+  const parts = path.split('/').filter(Boolean);
+  const params = {};
+  query.split('&').forEach(p => { if(!p) return; const [k,v] = p.split('='); params[k] = decodeURIComponent(v||''); });
+  return { path: '/' + parts.join('/'), parts, params };
+}
+
+function setRoute(){
+  const { parts, params } = parseHash();
+  const top = parts[0] || '';
+  let viewKey = '/';
+  if(top === 'shop')      viewKey = '/shop';
+  else if(top === 'product') viewKey = '/product';
+  else if(top === 'customize') viewKey = '/customize';
+  else if(top === 'cart')   viewKey = '/cart';
+  else if(top === 'story')  viewKey = '/story';
+  else if(top === 'craft')  viewKey = '/craft';
+  else if(top === 'dashboard') viewKey = '/dashboard';
+  else if(top === 'system') viewKey = '/system';
+
+  $$('.view').forEach(v => v.classList.toggle('is-active', v.dataset.view === viewKey));
+  $$('.nav a, .mobile-nav a').forEach(a => {
+    const r = a.getAttribute('data-route') || a.getAttribute('href').replace('#','');
+    a.classList.toggle('is-active', r === viewKey || (viewKey === '/product' && r === '/shop'));
+  });
+
+  // close mobile nav
+  $('#mobileNav').classList.remove('is-open');
+  $('#menuToggle').setAttribute('aria-expanded', 'false');
+
+  // route-specific renders
+  if(viewKey === '/shop'){
+    renderCatalog(params.cat || 'all');
+  }
+  if(viewKey === '/product'){
+    renderProductDetail(parts[1]);
+  }
+  if(viewKey === '/cart'){
+    renderCart();
+  }
+  if(viewKey === '/dashboard'){
+    renderDashboard(params.v || 'home');
+    if(params.r) openRequest(params.r);
+  }
+  if(viewKey === '/customize' && parts[1] === 'reset'){
+    resetCustomFlow();
+    location.hash = '#/customize';
+  }
+
+  window.scrollTo({ top:0, behavior: matchMedia('(prefers-reduced-motion:reduce)').matches ? 'auto' : 'instant' });
+
+  // re-arm reveal observer for new view content
+  armReveal();
+}
+
+window.addEventListener('hashchange', setRoute);
+
+/* -----------------------------------------------------------------
+   RENDER: HOME — categories + featured
+   ----------------------------------------------------------------- */
+function renderCategories(){
+  const track = $('#catsTrack'); if(!track) return;
+  // Travel distance starts at viewport-width so the first card flies in from the far right edge.
+  // Each successive card has a tighter stagger window for a smooth wave.
+  const vw = Math.max(window.innerWidth, 800);
+  track.innerHTML = CATEGORIES.map((c, i) => {
+    const start = (0.42 + i * 0.038).toFixed(3);
+    const end   = (0.42 + i * 0.038 + 0.34).toFixed(3); // longer window = smoother arrival
+    const dist  = Math.round(vw - i * 60); // first card far right; each subsequent slightly less far
+    return `
+      <a class="cat assemble-piece" href="#/shop?cat=${encodeURIComponent(c.key)}" aria-label="${c.label}"
+         data-from="right" data-start="${start}" data-end="${end}" data-distance="${dist}" data-blur="2" data-rotate="0">
+        <span class="cat__index">${String(i+1).padStart(2,'0')}</span>
+        <div class="media" data-aspect="3-4" data-label="${esc(c.img.split('/').pop())}">
+          <img src="${c.img}" alt="${c.label}" loading="lazy" onerror="this.style.display='none'" />
+        </div>
+        <div class="cat__overlay">
+          <h4>${c.label}</h4>
+          <div class="meta">
+            <small>${c.count || ''}</small>
+            <span class="cta">Explore <span class="arrow"></span></span>
+          </div>
+        </div>
+      </a>
+    `;
+  }).join('');
+  setupCatsSlider();
+  // Run scene engine once after render so initial card positions are correct
+  if(typeof updateScrollScenes === 'function') updateScrollScenes();
+}
+
+/* -----------------------------------------------------------------
+   CATEGORIES SLIDER — controls, drag, progress
+   ----------------------------------------------------------------- */
+function setupCatsSlider(){
+  const track = $('#catsTrack'); if(!track) return;
+  const prev = $('[data-cats-prev]');
+  const next = $('[data-cats-next]');
+  const bar  = $('#catsProgressBar');
+
+  function step(){
+    const first = track.firstElementChild;
+    if(!first) return 320;
+    const styles = getComputedStyle(track);
+    const gap = parseFloat(styles.columnGap || styles.gap || '14') || 14;
+    return first.getBoundingClientRect().width + gap;
+  }
+  function updateProgress(){
+    const max = Math.max(1, track.scrollWidth - track.clientWidth);
+    const p = Math.min(1, Math.max(0, track.scrollLeft / max));
+    if(bar) bar.style.width = (p * 100).toFixed(1) + '%';
+    if(prev) prev.disabled = track.scrollLeft <= 2;
+    if(next) next.disabled = track.scrollLeft >= max - 2;
+  }
+  prev && prev.addEventListener('click', () => track.scrollBy({ left: -step() * 1.2, behavior:'smooth' }));
+  next && next.addEventListener('click', () => track.scrollBy({ left:  step() * 1.2, behavior:'smooth' }));
+  track.addEventListener('scroll', updateProgress, { passive:true });
+  window.addEventListener('resize', updateProgress);
+
+  // Keyboard
+  track.addEventListener('keydown', (e) => {
+    if(e.key === 'ArrowRight'){ e.preventDefault(); track.scrollBy({ left:  step(), behavior:'smooth' }); }
+    if(e.key === 'ArrowLeft') { e.preventDefault(); track.scrollBy({ left: -step(), behavior:'smooth' }); }
+  });
+
+  // Pointer drag
+  let dragging = false, startX = 0, startLeft = 0, moved = 0;
+  track.addEventListener('pointerdown', (e) => {
+    if(e.pointerType === 'mouse' && e.button !== 0) return;
+    dragging = true; moved = 0;
+    startX = e.clientX; startLeft = track.scrollLeft;
+    track.classList.add('is-dragging');
+    track.setPointerCapture(e.pointerId);
+  });
+  track.addEventListener('pointermove', (e) => {
+    if(!dragging) return;
+    const dx = e.clientX - startX;
+    moved = Math.max(moved, Math.abs(dx));
+    track.scrollLeft = startLeft - dx;
+  });
+  function endDrag(e){
+    if(!dragging) return;
+    dragging = false;
+    track.classList.remove('is-dragging');
+    try{ track.releasePointerCapture(e.pointerId); }catch(_){}
+    if(moved > 6){
+      // Suppress the click that follows drag
+      const blocker = (ev) => { ev.preventDefault(); ev.stopPropagation(); track.removeEventListener('click', blocker, true); };
+      track.addEventListener('click', blocker, true);
+    }
+  }
+  track.addEventListener('pointerup', endDrag);
+  track.addEventListener('pointercancel', endDrag);
+  track.addEventListener('pointerleave', endDrag);
+
+  updateProgress();
+}
+
+function productCardHTML(p){
+  return `
+    <article class="product" data-id="${p.id}">
+      <div class="media" data-aspect="3-4" data-label="${esc(p.img.split('/').pop())}">
+        <span class="tag tag--gold product__badge">House Pick</span>
+        <img src="${p.img}" alt="${p.name}" loading="lazy" onerror="this.style.display='none'" />
+        <div class="product__hover" aria-hidden="true">
+          <div class="product__quick">
+            <button class="btn btn--ink btn--sm" data-action="quick-add" data-id="${p.id}">Add to Bag</button>
+            <a class="btn btn--ghost btn--sm product__view" href="#/product/${p.id}">View</a>
+          </div>
+        </div>
+      </div>
+      <div class="product__body">
+        <div>
+          <a class="product__name" href="#/product/${p.id}">${p.name}</a>
+          <div class="product__cat">${p.category}</div>
+        </div>
+        <div class="product__price"><span class="currency">₹</span>${p.price.toLocaleString('en-IN')}</div>
+      </div>
+      <p class="product__copy">${p.copy}</p>
+    </article>
+  `;
+}
+
+function renderFeatured(){
+  const featured = PRODUCTS.slice(0,4);
+  $('#featuredProducts').innerHTML = featured.map(productCardHTML).join('');
+}
+
+/* -----------------------------------------------------------------
+   RENDER: CATALOG
+   ----------------------------------------------------------------- */
+function renderCatalog(filter){
+  const cats = [{ key:'all', label:'All Pieces' }].concat(CATEGORIES.map(c => ({ key:c.key, label:c.label })));
+  $('#catalogFilters').innerHTML = cats.map(c => `
+    <button class="chip ${(filter===c.key || (filter==='all' && c.key==='all')) ? 'is-active' : ''}" data-cat="${c.key}">${c.label}</button>
+  `).join('');
+  const list = (filter && filter !== 'all') ? PRODUCTS.filter(p => p.cat === filter) : PRODUCTS;
+  $('#catalogProducts').innerHTML = list.map(productCardHTML).join('');
+}
+
+/* -----------------------------------------------------------------
+   RENDER: PRODUCT DETAIL
+   ----------------------------------------------------------------- */
+function renderProductDetail(id){
+  const p = PRODUCTS.find(p => p.id === id) || PRODUCTS[0];
+  $('#productDetail').innerHTML = `
+    <div class="pdp__crumbs"><a href="#/">Home</a> &nbsp;/&nbsp; <a href="#/shop">Shop</a> &nbsp;/&nbsp; <a href="#/shop?cat=${p.cat}">${p.category}</a> &nbsp;/&nbsp; ${p.name}</div>
+    <div class="pdp">
+      <div class="pdp__gallery">
+        <div class="media" data-label="${esc(p.img.split('/').pop())}"><img src="${p.img}" alt="${p.name}" loading="eager" onerror="this.style.display='none'" /></div>
+        <div class="media" data-label="alt-1.jpg"><img src="${p.img.replace(/-1\./,'-2.')}" alt="" loading="lazy" onerror="this.style.display='none'" /></div>
+        <div class="media" data-label="detail.jpg"><img src="./assets/${p.cat.toLowerCase()}-detail.jpg" alt="" loading="lazy" onerror="this.style.display='none'" /></div>
+      </div>
+      <div>
+        <span class="eyebrow">${p.category} &nbsp;·&nbsp; House Edit</span>
+        <h1 class="pdp__title" style="margin-top:10px"><em style="font-style:normal; color:var(--pico-maroon)">${p.name.split(' ')[0]}</em> ${p.name.split(' ').slice(1).join(' ')}</h1>
+        <div class="pdp__price">${fmt(p.price)}</div>
+        <p class="pdp__desc">${p.copy} Reversible interior in habotai silk. Solid brass closures. Hand-finished by named makers in our Mumbai atelier.</p>
+        <div class="pdp__story">
+          <h4>The Textile</h4>
+          <p>${p.story}</p>
+        </div>
+        <div class="pdp__actions">
+          <div class="qty" aria-label="Quantity">
+            <button type="button" data-qty="-1" aria-label="Decrease">−</button>
+            <input id="pdpQty" type="text" value="1" inputmode="numeric" />
+            <button type="button" data-qty="1" aria-label="Increase">+</button>
+          </div>
+          <button class="btn btn--primary btn--lg" data-action="add" data-id="${p.id}">Add to Bag <span class="arrow"></span></button>
+          <a class="btn btn--ghost btn--lg" href="#/customize">Customize With My Fabric</a>
+        </div>
+        <div class="pdp__features">
+          <div class="pdp__feature">
+            <svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-9"/></svg>
+            <div><h5>Lifetime Mending</h5><p>Repaired at our atelier, free, forever.</p></div>
+          </div>
+          <div class="pdp__feature">
+            <svg viewBox="0 0 24 24"><path d="M3 8h18M3 16h18"/></svg>
+            <div><h5>Mulberry Silk Lining</h5><p>Soft, breathable, and quietly luxurious.</p></div>
+          </div>
+          <div class="pdp__feature">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            <div><h5>3–6 Weeks</h5><p>Made-to-order, slowly, by named artisans.</p></div>
+          </div>
+          <div class="pdp__feature">
+            <svg viewBox="0 0 24 24"><path d="M5 7h14l-1.5 12a2 2 0 0 1-2 1.7H8.5A2 2 0 0 1 6.5 19L5 7z"/><path d="M9 7V5a3 3 0 0 1 6 0v2"/></svg>
+            <div><h5>Wrapped &amp; Sent</h5><p>Mulberry tissue. Hand-stamped box. Maker's note.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section style="margin-top:80px">
+      <div class="section-head">
+        <div class="section-head__title">
+          <span class="eyebrow">You may also like</span>
+          <h2 style="margin-top:18px">From the same <em>atelier</em></h2>
+        </div>
+      </div>
+      <div class="products">${PRODUCTS.filter(x => x.id !== p.id).slice(0,4).map(productCardHTML).join('')}</div>
+    </section>
+  `;
+}
+
+/* -----------------------------------------------------------------
+   CART
+   ----------------------------------------------------------------- */
+function addToCart(id, qty=1){
+  const p = PRODUCTS.find(p => p.id === id);
+  if(!p) return;
+  const found = STATE.cart.find(l => l.id === id);
+  if(found) found.qty += qty;
+  else STATE.cart.push({ id, qty });
+  updateCartCount();
+  toast(`${p.name} added to bag`);
+}
+function removeFromCart(id){ STATE.cart = STATE.cart.filter(l => l.id !== id); updateCartCount(); renderCart(); }
+function setQty(id, qty){
+  qty = Math.max(1, qty|0);
+  const l = STATE.cart.find(l => l.id === id);
+  if(l) l.qty = qty;
+  renderCart();
+}
+function updateCartCount(){
+  const n = STATE.cart.reduce((s,l) => s + l.qty, 0);
+  const el = $('#cartCount');
+  el.textContent = n;
+  el.classList.toggle('is-on', n > 0);
+}
+function renderCart(){
+  const lines = $('#cartLines'); if(!lines) return;
+  if(STATE.cart.length === 0){
+    lines.innerHTML = `
+      <div class="cart-empty">
+        <svg viewBox="0 0 24 24"><path d="M5 7h14l-1.5 12a2 2 0 0 1-2 1.7H8.5A2 2 0 0 1 6.5 19L5 7z"/><path d="M9 7V5a3 3 0 0 1 6 0v2"/></svg>
+        <h3>Your bag is quietly empty.</h3>
+        <p>Begin with a piece from the catalogue, or commission one from your own fabric.</p>
+        <div style="margin-top:24px; display:flex; gap:12px; justify-content:center; flex-wrap:wrap">
+          <a class="btn btn--primary" href="#/shop">Shop Collection</a>
+          <a class="btn btn--ghost" href="#/customize">Begin a Commission</a>
+        </div>
+      </div>
+    `;
+    $('#sumSubtotal').textContent = fmt(0);
+    $('#sumTotal').textContent = fmt(0);
+    return;
+  }
+  lines.innerHTML = STATE.cart.map(l => {
+    const p = PRODUCTS.find(p => p.id === l.id); if(!p) return '';
+    return `
+      <div class="cart-line">
+        <div class="media" data-label="${esc(p.img.split('/').pop())}"><img src="${p.img}" alt="${p.name}" loading="lazy" onerror="this.style.display='none'" /></div>
+        <div>
+          <div class="cart-line__name">${p.name}</div>
+          <div class="cart-line__cat">${p.category}</div>
+          <div class="cart-line__qty">
+            <div class="qty">
+              <button type="button" data-cart-qty="${l.id}" data-d="-1">−</button>
+              <input type="text" value="${l.qty}" data-cart-input="${l.id}" inputmode="numeric" />
+              <button type="button" data-cart-qty="${l.id}" data-d="1">+</button>
+            </div>
+            <button class="cart-line__remove" data-cart-remove="${l.id}">Remove</button>
+          </div>
+        </div>
+        <div class="cart-line__price">${fmt(p.price * l.qty)}</div>
+      </div>
+    `;
+  }).join('');
+  const subtotal = STATE.cart.reduce((s,l) => {
+    const p = PRODUCTS.find(p => p.id === l.id); return s + (p ? p.price * l.qty : 0);
+  }, 0);
+  $('#sumSubtotal').textContent = fmt(subtotal);
+  $('#sumTotal').textContent = fmt(subtotal);
+}
+
+/* -----------------------------------------------------------------
+   CUSTOM FLOW
+   ----------------------------------------------------------------- */
+function renderCustomChoices(){
+  $('#customChoices').innerHTML = PRODUCTS.filter(p => /Bomber|Windsheeter|Sling|Clutch|Wallet|Tie/.test(p.cat)).slice(0,9).map(p => `
+    <div class="choice ${p.id === STATE.customSelected ? 'is-selected' : ''}" data-choice="${p.id}">
+      <div class="media" data-aspect="1-1" data-label="${esc(p.img.split('/').pop())}">
+        <img src="${p.img}" alt="${p.name}" loading="lazy" onerror="this.style.display='none'" />
+      </div>
+      <h5>${p.name}</h5>
+      <p>${p.category}</p>
+    </div>
+  `).join('');
+}
+
+function setCustomStep(n){
+  STATE.customStep = n;
+  $$('.flow-panel').forEach(p => p.classList.toggle('is-active', +p.dataset.panel === n));
+  $$('.custom-flow__step').forEach(s => {
+    const k = +s.dataset.step;
+    s.classList.toggle('is-active', k === n);
+    s.classList.toggle('is-done', k < n);
+  });
+  // Anchor on the form section (not the page hero), accounting for the fixed header.
+  const flow = $('.custom-flow');
+  if(flow){
+    const headerH = 78;
+    const top = flow.getBoundingClientRect().top + window.scrollY - headerH - 20;
+    const reduced = matchMedia('(prefers-reduced-motion:reduce)').matches;
+    window.scrollTo({ top: Math.max(0, top), behavior: reduced ? 'auto' : 'smooth' });
+  }
+}
+
+function resetCustomFlow(){
+  STATE.customStep = 1; STATE.customSelected = 'banaras-bomber';
+  $('#customForm').reset();
+  $('#uploadPreview').classList.remove('is-on');
+  $('#uploadPreview').style.backgroundImage = '';
+  renderCustomChoices();
+  setCustomStep(1);
+}
+
+/* -----------------------------------------------------------------
+   DASHBOARD
+   ----------------------------------------------------------------- */
+function renderDashboard(view){
+  $$('#dashNav .dash__nav-item').forEach(n => n.classList.toggle('is-active', n.dataset.dash === view));
+  const main = $('#dashMain');
+  if(view === 'home')      main.innerHTML = dashHomeHTML();
+  else if(view === 'requests') main.innerHTML = dashRequestsHTML();
+  else if(view === 'schedule') main.innerHTML = dashScheduleHTML();
+  else if(view === 'workflow') main.innerHTML = dashWorkflowHTML();
+  else                      main.innerHTML = dashHomeHTML();
+}
+
+function statusLabel(k){ return ({
+  submitted:'Submitted', pickup:'Pickup Scheduled', collected:'Collected',
+  review:'In Review', production:'In Production', qc:'Quality Check', ready:'Ready to Ship'
+})[k] || k; }
+
+function statCount(k){ return REQUESTS.filter(r => r.status === k).length; }
+
+function dashHomeHTML(){
+  const totals = REQUESTS.length;
+  return `
+    <div class="dash__head">
+      <div>
+        <span class="eyebrow">Atelier OS &nbsp;·&nbsp; ${new Date().toDateString()}</span>
+        <h2 style="margin-top:10px">Good morning, <em style="font-style:italic">Anika</em>.</h2>
+      </div>
+      <div class="meta">
+        <span>Mumbai · Banaras · Patan · Kanchipuram</span>
+        <button class="btn btn--primary btn--sm">+ New Commission</button>
+      </div>
+    </div>
+
+    <div class="kpis">
+      <div class="kpi"><div class="kpi__label">Total Custom Requests</div><div class="kpi__value">${totals}</div><div class="kpi__delta">▲ 12 this week</div><div class="kpi__bar"><span style="width:78%"></span></div></div>
+      <div class="kpi"><div class="kpi__label">Pending Pickups</div><div class="kpi__value">${statCount('submitted') + statCount('pickup')}</div><div class="kpi__delta gold">${statCount('pickup')} scheduled</div><div class="kpi__bar"><span style="width:40%; background:var(--pico-gold)"></span></div></div>
+      <div class="kpi"><div class="kpi__label">Under Review</div><div class="kpi__value">${statCount('review') + statCount('collected')}</div><div class="kpi__delta">Avg. 2 days</div><div class="kpi__bar"><span style="width:32%"></span></div></div>
+      <div class="kpi"><div class="kpi__label">In Production</div><div class="kpi__value">${statCount('production')}</div><div class="kpi__delta">Avg. 22 days</div><div class="kpi__bar"><span style="width:62%"></span></div></div>
+      <div class="kpi"><div class="kpi__label">Ready to Dispatch</div><div class="kpi__value">${statCount('qc') + statCount('ready')}</div><div class="kpi__delta gold">${statCount('ready')} today</div><div class="kpi__bar"><span style="width:24%; background:var(--pico-gold)"></span></div></div>
+    </div>
+
+    <div class="dash__row">
+      <section class="panel">
+        <div class="panel__head"><h3>Recent commissions</h3><a href="#/dashboard?v=requests" class="pill">View all →</a></div>
+        <div class="panel__body" style="padding:0">
+          <table class="req-table">
+            <thead><tr><th></th><th>Reference</th><th>Customer</th><th>Silhouette</th><th>City</th><th>Submitted</th><th>Status</th></tr></thead>
+            <tbody>
+              ${REQUESTS.slice(0,5).map(r => `
+                <tr data-req="${r.ref}">
+                  <td><div class="thumb media" data-label=""><img src="${r.thumb}" alt="" loading="lazy" onerror="this.style.display='none'" /></div></td>
+                  <td><strong>${r.ref}</strong></td>
+                  <td><div class="name">${r.name}</div></td>
+                  <td>${r.silhouette}</td>
+                  <td class="city">${r.city}</td>
+                  <td class="city">${r.date}</td>
+                  <td><span class="status" data-status="${r.status}">${statusLabel(r.status)}</span></td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel__head"><h3>Today's pickups</h3><span class="pill">3 windows</span></div>
+        <div class="panel__body">
+          ${REQUESTS.filter(r => r.status === 'pickup' || r.status === 'submitted').slice(0,4).map(r => `
+            <div class="timeline__row">
+              <span class="timeline__date">09:00 · MUM</span>
+              <div style="flex:1">
+                <strong>${r.name}</strong><br/>
+                <small class="city">${r.address}</small>
+              </div>
+              <span class="status" data-status="${r.status}">${statusLabel(r.status)}</span>
+            </div>
+          `).join('')}
+        </div>
+      </section>
+    </div>
+  `;
+}
+
+function dashRequestsHTML(){
+  return `
+    <div class="dash__head">
+      <div>
+        <span class="eyebrow">Custom Requests</span>
+        <h2 style="margin-top:10px">All <em style="font-style:italic">commissions</em></h2>
+      </div>
+      <div class="meta">
+        <input class="input" placeholder="Search by ref, name, city…" style="height:38px; width:240px" />
+        <button class="btn btn--ghost btn--sm">Export</button>
+      </div>
+    </div>
+
+    <section class="panel">
+      <div class="panel__body" style="padding:0">
+        <table class="req-table">
+          <thead>
+            <tr><th></th><th>Reference</th><th>Customer</th><th>Silhouette</th><th>City</th><th>Submitted</th><th>Status</th><th></th></tr>
+          </thead>
+          <tbody>
+            ${REQUESTS.map(r => `
+              <tr data-req="${r.ref}">
+                <td><div class="thumb media" data-label=""><img src="${r.thumb}" alt="" loading="lazy" onerror="this.style.display='none'" /></div></td>
+                <td><strong>${r.ref}</strong></td>
+                <td><div class="name">${r.name}</div></td>
+                <td>${r.silhouette}</td>
+                <td class="city">${r.city}</td>
+                <td class="city">${r.date}</td>
+                <td><span class="status" data-status="${r.status}">${statusLabel(r.status)}</span></td>
+                <td><button class="btn btn--ghost btn--sm" data-req-open="${r.ref}">Open</button></td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel" id="reqDetailPanel" style="margin-top:24px; display:none">
+      <div class="panel__head">
+        <h3 id="rdTitle">Request Detail</h3>
+        <button class="pill" id="rdClose">Close ✕</button>
+      </div>
+      <div class="panel__body" id="rdBody"></div>
+    </section>
+  `;
+}
+
+function dashScheduleHTML(){
+  return `
+    <div class="dash__head">
+      <div>
+        <span class="eyebrow">Pickups &amp; Logistics</span>
+        <h2 style="margin-top:10px">This week's <em style="font-style:italic">collections</em></h2>
+      </div>
+      <div class="meta">
+        <span>Pickup partners: Bluedart Heritage · PICO Couriers</span>
+        <button class="btn btn--primary btn--sm">+ Schedule Pickup</button>
+      </div>
+    </div>
+
+    <div class="dash__row">
+      <section class="panel">
+        <div class="panel__head"><h3>Upcoming pickups</h3><span class="pill">${REQUESTS.filter(r=>r.status==='pickup'||r.status==='submitted').length} scheduled</span></div>
+        <div class="panel__body" style="padding:0">
+          <table class="req-table">
+            <thead><tr><th>Date</th><th>Window</th><th>Customer</th><th>Address</th><th>Partner</th><th>Status</th></tr></thead>
+            <tbody>
+              ${REQUESTS.filter(r => ['submitted','pickup'].includes(r.status)).map((r,i) => `
+                <tr>
+                  <td><strong>${r.date}</strong></td>
+                  <td>${['Morning','Afternoon','Evening'][i%3]}</td>
+                  <td><div class="name">${r.name}</div></td>
+                  <td class="city">${r.address}</td>
+                  <td>${r.partner}</td>
+                  <td><span class="status" data-status="${r.status}">${statusLabel(r.status)}</span></td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel__head"><h3>Schedule a pickup</h3></div>
+        <div class="panel__body">
+          <div class="form-grid">
+            <div class="field"><label>Customer</label>
+              <select class="select">${REQUESTS.filter(r=>r.status==='submitted').map(r => `<option>${r.ref} — ${r.name}</option>`).join('')}</select>
+            </div>
+            <div class="field"><label>Pickup date</label><input type="date" class="input" /></div>
+            <div class="field"><label>Window</label>
+              <select class="select"><option>Morning · 9–12</option><option>Afternoon · 12–4</option><option>Evening · 4–7</option></select>
+            </div>
+            <div class="field"><label>Partner</label>
+              <select class="select"><option>PICO Couriers</option><option>Bluedart Heritage</option><option>Atelier in-house</option></select>
+            </div>
+            <div class="field field--full"><label>Internal note</label><textarea class="textarea" placeholder="Fragile fabric — pack flat. Customer will be home from 10am."></textarea></div>
+          </div>
+          <div style="margin-top:18px"><button class="btn btn--primary btn--block">Confirm Pickup</button></div>
+        </div>
+      </section>
+    </div>
+  `;
+}
+
+function dashWorkflowHTML(){
+  return `
+    <div class="dash__head">
+      <div>
+        <span class="eyebrow">Workflow</span>
+        <h2 style="margin-top:10px">Every commission, <em style="font-style:italic">tracked</em>.</h2>
+      </div>
+    </div>
+
+    <section class="panel">
+      <div class="panel__body">
+        ${REQUESTS.map(r => `
+          <div style="padding:14px 0; border-bottom:1px solid var(--pico-line-soft)">
+            <div class="flex between center" style="margin-bottom:14px; flex-wrap:wrap; gap:12px">
+              <div>
+                <strong>${r.ref}</strong>
+                <span style="margin-left:10px; font-family:var(--font-display); font-style:italic">${r.name}</span>
+                <span class="city" style="margin-left:10px; font-size:12px">${r.silhouette} · ${r.city}</span>
+              </div>
+              <span class="status" data-status="${r.status}">${statusLabel(r.status)}</span>
+            </div>
+            <div class="tracker">
+              ${WORKFLOW.map((w,i) => {
+                const idx = WORKFLOW.findIndex(x => x.key === r.status);
+                const done = i < idx; const cur = i === idx;
+                return `
+                  <div class="tracker__node ${done?'is-done':''} ${cur?'is-current':''}">
+                    <span class="tracker__dot"></span>
+                    <span class="tracker__label">${w.label}</span>
+                  </div>
+                  ${i < WORKFLOW.length-1 ? `<span class="tracker__line ${done?'is-done':''}"></span>` : ''}
+                `;
+              }).join('')}
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </section>
+  `;
+}
+
+function openRequest(ref){
+  const r = REQUESTS.find(r => r.ref === ref); if(!r) return;
+  // Make sure we're on requests view
+  if(!$('#reqDetailPanel')){
+    location.hash = '#/dashboard?v=requests&r=' + ref;
+    return;
+  }
+  $$('.req-table tr').forEach(tr => tr.classList.toggle('is-selected', tr.dataset.req === ref));
+  $('#reqDetailPanel').style.display = 'block';
+  $('#rdTitle').textContent = `${r.ref} · ${r.name}`;
+  $('#rdBody').innerHTML = `
+    <div class="detail">
+      <div class="detail__media">
+        <div class="media" data-aspect="3-4" data-label="${esc(r.thumb.split('/').pop())}"><img src="${r.thumb}" alt="" loading="lazy" onerror="this.style.display='none'" /></div>
+        <div class="detail__quote">“${r.story}”</div>
+      </div>
+      <div>
+        <div class="tracker" style="margin-bottom:24px">
+          ${WORKFLOW.map((w,i) => {
+            const idx = WORKFLOW.findIndex(x => x.key === r.status);
+            const done = i < idx; const cur = i === idx;
+            return `
+              <div class="tracker__node ${done?'is-done':''} ${cur?'is-current':''}">
+                <span class="tracker__dot"></span>
+                <span class="tracker__label">${w.label}</span>
+              </div>
+              ${i < WORKFLOW.length-1 ? `<span class="tracker__line ${done?'is-done':''}"></span>` : ''}
+            `;
+          }).join('')}
+        </div>
+
+        <div class="detail__data">
+          <div class="data"><span class="k">Reference</span><span class="v">${r.ref}</span></div>
+          <div class="data"><span class="k">Status</span><span class="v"><span class="status" data-status="${r.status}">${statusLabel(r.status)}</span></span></div>
+          <div class="data"><span class="k">Customer</span><span class="v">${r.name}</span></div>
+          <div class="data"><span class="k">Silhouette</span><span class="v maroon">${r.silhouette}</span></div>
+          <div class="data"><span class="k">Pickup city</span><span class="v">${r.city}</span></div>
+          <div class="data"><span class="k">Submitted</span><span class="v">${r.date}</span></div>
+          <div class="data"><span class="k">Pickup address</span><span class="v">${r.address}</span></div>
+          <div class="data"><span class="k">Pickup partner</span><span class="v">${r.partner}</span></div>
+          <div class="data"><span class="k">Production timeline</span><span class="v">${r.timeline}</span></div>
+        </div>
+
+        <div style="margin-top:24px">
+          <span class="eyebrow">Atelier notes</span>
+          <div class="notes-list" style="margin-top:14px">
+            <div class="note"><small>Anika R. · Atelier Lead · 28 Apr</small>Suitability looks excellent — the borders are intact and the silk is uncompromised. Recommending the reversible bomber pattern.</div>
+            <div class="note"><small>Vikas T. · Master Cutter · 29 Apr</small>Pattern study booked for 02 May. Will preserve the palla in the back panel.</div>
+          </div>
+          <div style="margin-top:14px">
+            <textarea class="textarea" placeholder="Add an internal note…"></textarea>
+            <div style="display:flex; gap:10px; margin-top:10px; flex-wrap:wrap">
+              <button class="btn btn--primary btn--sm">Save Note</button>
+              <button class="btn btn--ghost btn--sm">Advance Status →</button>
+              <button class="btn btn--ghost btn--sm">Message Customer</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+  $('#reqDetailPanel').scrollIntoView({ behavior:'smooth', block:'start' });
+}
+
+/* -----------------------------------------------------------------
+   EVENTS
+   ----------------------------------------------------------------- */
+document.addEventListener('click', (e) => {
+  const t = e.target;
+
+  // Quick add from card
+  const quick = t.closest('[data-action="quick-add"]');
+  if(quick){ e.preventDefault(); addToCart(quick.dataset.id, 1); return; }
+
+  // PDP add
+  const add = t.closest('[data-action="add"]');
+  if(add){
+    const qty = Math.max(1, parseInt($('#pdpQty')?.value || '1', 10) || 1);
+    addToCart(add.dataset.id, qty); return;
+  }
+
+  // Qty stepper PDP
+  const qBtn = t.closest('[data-qty]');
+  if(qBtn){
+    const inp = $('#pdpQty'); if(!inp) return;
+    inp.value = Math.max(1, (parseInt(inp.value,10)||1) + (parseInt(qBtn.dataset.qty,10)||0));
+    return;
+  }
+
+  // Cart line qty
+  const cqBtn = t.closest('[data-cart-qty]');
+  if(cqBtn){
+    const id = cqBtn.dataset.cartQty; const d = parseInt(cqBtn.dataset.d,10) || 0;
+    const line = STATE.cart.find(l => l.id === id); if(!line) return;
+    setQty(id, line.qty + d); return;
+  }
+  // Cart remove
+  const rm = t.closest('[data-cart-remove]');
+  if(rm){ removeFromCart(rm.dataset.cartRemove); return; }
+
+  // Filter chips
+  const chip = t.closest('.chip[data-cat]');
+  if(chip){
+    const k = chip.dataset.cat;
+    const url = (k === 'all') ? '#/shop' : '#/shop?cat=' + encodeURIComponent(k);
+    location.hash = url;
+    return;
+  }
+
+  // Custom flow nav
+  if(t.matches('[data-flow-next]')){
+    if(STATE.customStep < 5) setCustomStep(STATE.customStep + 1);
+    return;
+  }
+  if(t.matches('[data-flow-prev]')){
+    if(STATE.customStep > 1) setCustomStep(STATE.customStep - 1);
+    return;
+  }
+  // Custom choice
+  const ch = t.closest('.choice[data-choice]');
+  if(ch){
+    STATE.customSelected = ch.dataset.choice;
+    $$('.choice').forEach(c => c.classList.toggle('is-selected', c === ch));
+    return;
+  }
+  // Payment method
+  const pay = t.closest('.pay[data-pay]');
+  if(pay){
+    $$('.pay').forEach(p => p.classList.toggle('is-active', p === pay));
+    return;
+  }
+  // Cart icon click
+  if(t.closest('#cartBtn')){ e.preventDefault(); location.hash = '#/cart'; return; }
+
+  // Brand mark click — always land on the home hero
+  const brand = t.closest('.site-header .brand-mark');
+  if(brand){
+    e.preventDefault();
+    const reduced = matchMedia('(prefers-reduced-motion:reduce)').matches;
+    if(location.hash === '#/' || location.hash === '' || location.hash === '#'){
+      window.scrollTo({ top:0, behavior: reduced ? 'auto' : 'smooth' });
+    } else {
+      location.hash = '#/';
+      // setRoute already scrolls to top on hashchange
+    }
+    return;
+  }
+
+  // Mobile menu toggle
+  if(t.closest('#menuToggle')){
+    const open = $('#mobileNav').classList.toggle('is-open');
+    t.closest('#menuToggle').setAttribute('aria-expanded', String(open));
+    return;
+  }
+
+  // Dashboard request open
+  const reqRow = t.closest('[data-req]');
+  if(reqRow && !t.closest('button')){
+    location.hash = '#/dashboard?v=requests&r=' + reqRow.dataset.req;
+    return;
+  }
+  const reqOpen = t.closest('[data-req-open]');
+  if(reqOpen){ e.preventDefault(); location.hash = '#/dashboard?v=requests&r=' + reqOpen.dataset.reqOpen; return; }
+  if(t.id === 'rdClose'){ $('#reqDetailPanel').style.display = 'none'; return; }
+
+  // Checkout (mock)
+  if(t.id === 'ckBtn'){
+    if(STATE.cart.length === 0){ toast('Your bag is empty'); return; }
+    STATE.cart = []; updateCartCount(); renderCart();
+    toast('Order placed — confirmation on its way');
+    return;
+  }
+});
+
+document.addEventListener('input', (e) => {
+  // Cart qty input
+  const ci = e.target.closest('[data-cart-input]');
+  if(ci){
+    const id = ci.dataset.cartInput;
+    const v = Math.max(1, parseInt(ci.value, 10) || 1);
+    setQty(id, v);
+    return;
+  }
+});
+
+// Custom form submit (step 4 -> step 5)
+document.addEventListener('submit', (e) => {
+  if(e.target && e.target.id === 'customForm'){
+    e.preventDefault();
+    // Generate ref
+    const ref = 'PCO-' + (1043 + Math.floor(Math.random()*999));
+    $('#refCode').textContent = ref;
+    setCustomStep(5);
+    return;
+  }
+});
+
+// File upload preview
+document.addEventListener('change', (e) => {
+  if(e.target && e.target.id === 'fabricUpload'){
+    const f = e.target.files && e.target.files[0]; if(!f) return;
+    const url = URL.createObjectURL(f);
+    const prev = $('#uploadPreview');
+    prev.classList.add('is-on');
+    prev.style.backgroundImage = `url(${url})`;
+    prev.style.backgroundSize = 'cover';
+    prev.style.backgroundPosition = 'center';
+  }
+});
+
+/* -----------------------------------------------------------------
+   SCROLL EFFECTS
+   ----------------------------------------------------------------- */
+const header = $('#siteHeader');
+const reducedMotion = () => matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+// rAF-throttled wrapper so multiple scroll events collapse into one frame
+let _scenesRaf = 0;
+function scheduleScenes(){
+  if(_scenesRaf) return;
+  _scenesRaf = requestAnimationFrame(() => {
+    _scenesRaf = 0;
+    _updateScrollScenesNow();
+  });
+}
+
+function updateScrollScenes(){ _updateScrollScenesNow(); }
+
+function _updateScrollScenesNow(){
+  const scenes = $$('.scroll-scene');
+  if(!scenes.length) return;
+  const vh = window.innerHeight;
+  const reduced = reducedMotion();
+  scenes.forEach(scene => {
+    const r = scene.getBoundingClientRect();
+    // p: 0 when section's top hits bottom of viewport, 1 when section's bottom leaves top
+    const total = r.height + vh;
+    const passed = vh - r.top;
+    const p = reduced ? 1 : Math.max(0, Math.min(1, passed / total));
+    scene.style.setProperty('--p', p.toFixed(3));
+
+    // Per-element reveal: data-start..data-end window mapped from p -> 0..1
+    scene.querySelectorAll('.h-line, .scene-el').forEach(el => {
+      const s = parseFloat(el.dataset.start || '0');
+      const e = parseFloat(el.dataset.end   || (s + 0.18));
+      const t = reduced ? 1 : Math.max(0, Math.min(1, (p - s) / Math.max(0.0001, e - s)));
+      const isLine = el.classList.contains('h-line');
+      const dist = isLine ? 60 : 40;
+      el.style.opacity = t.toFixed(3);
+      el.style.transform = `translate3d(0, ${((1 - t) * dist).toFixed(1)}px, 0)`;
+      if(isLine) el.style.filter = `blur(${((1 - t) * 6).toFixed(2)}px)`;
+    });
+
+    // Word-by-word mask reveal (translate inner from 100%→0)
+    scene.querySelectorAll('.word-mask').forEach(el => {
+      const inner = el.firstElementChild; if(!inner) return;
+      const s = parseFloat(el.dataset.start || '0');
+      const e = parseFloat(el.dataset.end   || (s + 0.18));
+      const t = reduced ? 1 : Math.max(0, Math.min(1, (p - s) / Math.max(0.0001, e - s)));
+      const eased = 1 - Math.pow(1 - t, 4);
+      inner.style.transform = `translate3d(0, ${((1 - eased) * 100).toFixed(1)}%, 0)`;
+    });
+
+    // Drawing rule (gold underline that grows from 0% → 100% width)
+    scene.querySelectorAll('.cats-rule, .draw-rule').forEach(el => {
+      const s = parseFloat(el.dataset.start || '0');
+      const e = parseFloat(el.dataset.end   || (s + 0.20));
+      const t = reduced ? 1 : Math.max(0, Math.min(1, (p - s) / Math.max(0.0001, e - s)));
+      const eased = 1 - Math.pow(1 - t, 3);
+      el.style.backgroundSize = `${(eased * 100).toFixed(1)}% 100%`;
+    });
+
+    // Directional assembly pieces (.assemble-piece, data-from = left|right|up|down|scale)
+    scene.querySelectorAll('.assemble-piece').forEach(el => {
+      const s = parseFloat(el.dataset.start || '0');
+      const e = parseFloat(el.dataset.end   || (s + 0.22));
+      const t = reduced ? 1 : Math.max(0, Math.min(1, (p - s) / Math.max(0.0001, e - s)));
+      // ease-out quart for a softer, more luxurious settle
+      const eased = 1 - Math.pow(1 - t, 4);
+      const inv = 1 - eased;
+      const dir = (el.dataset.from || 'down').toLowerCase();
+      const rot = parseFloat(el.dataset.rotate || '0') || 0;
+      const distOverride = parseFloat(el.dataset.distance || '');
+      const blurMax = parseFloat(el.dataset.blur || '5') || 0;
+      const defaultDist = (dir === 'left' || dir === 'right') ? 120 : (dir === 'up' ? 80 : 100);
+      const dist = isNaN(distOverride) ? defaultDist : distOverride;
+      let tx = 0, ty = 0, sc = 1;
+      if(dir === 'left')  tx = -dist * inv;
+      else if(dir === 'right') tx =  dist * inv;
+      else if(dir === 'up')    ty = -dist * inv;
+      else if(dir === 'down')  ty =  dist * inv;
+      else if(dir === 'scale'){ sc = 0.88 + eased * 0.12; }
+      const r = rot * inv;
+      el.style.opacity = eased.toFixed(3);
+      el.style.transform = `translate3d(${tx.toFixed(1)}px, ${ty.toFixed(1)}px, 0) rotate(${r.toFixed(2)}deg) scale(${sc.toFixed(3)})`;
+      el.style.filter   = blurMax ? `blur(${(inv * blurMax).toFixed(2)}px)` : '';
+    });
+
+    // Parallax targets within the scene
+    scene.querySelectorAll('[data-parallax]').forEach(el => {
+      const f = parseFloat(el.dataset.parallax) || 0.1;
+      const offset = reduced ? 0 : (p - 0.5) * 120 * f * -1;
+      const scale  = reduced ? 1 : (0.94 + p * 0.08);
+      el.style.transform = `translate3d(0, ${offset.toFixed(1)}px, 0) scale(${scale.toFixed(3)})`;
+    });
+  });
+}
+
+window.addEventListener('scroll', () => {
+  header.classList.toggle('is-scrolled', window.scrollY > 8);
+  const stack = $('#heroStack');
+  if(stack && !reducedMotion()){
+    const y = Math.min(220, window.scrollY * 0.18);
+    const cards = stack.querySelectorAll('.hero__card');
+    cards.forEach((c, i) => {
+      const factor = (i+1) * 0.6;
+      c.style.transform = `translateY(${y * factor * 0.2}px) translateZ(${(i+1)*40}px)`;
+    });
+  }
+  scheduleScenes();
+}, { passive:true });
+window.addEventListener('resize', () => { scheduleScenes(); });
+
+// Subtle 3D tilt on hero
+(function tilt(){
+  const stack = $('#heroStack'); if(!stack) return;
+  if(matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+  if(matchMedia('(max-width:880px)').matches) return;
+  stack.addEventListener('mousemove', (e) => {
+    const r = stack.getBoundingClientRect();
+    const x = (e.clientX - r.left)/r.width - .5;
+    const y = (e.clientY - r.top)/r.height - .5;
+    stack.style.transform = `rotateY(${x*4}deg) rotateX(${-y*4}deg)`;
+  });
+  stack.addEventListener('mouseleave', () => { stack.style.transform = ''; });
+})();
+
+/* -----------------------------------------------------------------
+   REVEAL ON SCROLL
+   ----------------------------------------------------------------- */
+let revealObs, counterObs, typeObs;
+function armReveal(){
+  if(!('IntersectionObserver' in window)) {
+    $$('.reveal').forEach(el => el.classList.add('is-in'));
+    $$('.counter').forEach(runCounter);
+    $$('.typewriter').forEach(runTypewriter);
+    return;
+  }
+  if(!revealObs){
+    revealObs = new IntersectionObserver((entries) => {
+      entries.forEach(en => { if(en.isIntersecting){ en.target.classList.add('is-in'); revealObs.unobserve(en.target); } });
+    }, { rootMargin:'0px 0px -10% 0px', threshold:.06 });
+  }
+  if(!counterObs){
+    counterObs = new IntersectionObserver((entries) => {
+      entries.forEach(en => { if(en.isIntersecting){ runCounter(en.target); counterObs.unobserve(en.target); } });
+    }, { rootMargin:'0px 0px -10% 0px', threshold:.4 });
+  }
+  if(!typeObs){
+    typeObs = new IntersectionObserver((entries) => {
+      entries.forEach(en => { if(en.isIntersecting){ runTypewriter(en.target); typeObs.unobserve(en.target); } });
+    }, { rootMargin:'0px 0px -10% 0px', threshold:.4 });
+  }
+  $$('.reveal:not(.is-in)').forEach(el => revealObs.observe(el));
+  $$('.counter:not(.is-counted)').forEach(el => counterObs.observe(el));
+  $$('.typewriter:not(.is-typed)').forEach(el => typeObs.observe(el));
+}
+
+/* -----------------------------------------------------------------
+   TYPEWRITER ANIMATION
+   Source string uses | to delimit emphasised segments, e.g.
+     "we make |old things new.|"
+   becomes plain "we make " then a maroon span "old things new."
+   ----------------------------------------------------------------- */
+function runTypewriter(el){
+  if(el.classList.contains('is-typed')) return;
+  el.classList.add('is-typed');
+  const raw = el.dataset.text || el.textContent || '';
+  const reduced = matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+  // Tokenise into [{text, em}, ...]
+  const parts = []; let em = false; let buf = '';
+  for(let i = 0; i < raw.length; i++){
+    const ch = raw[i];
+    if(ch === '|'){ if(buf){ parts.push({ text:buf, em }); buf = ''; } em = !em; }
+    else buf += ch;
+  }
+  if(buf) parts.push({ text:buf, em });
+  const flat = parts.map(p => p.text).join('');
+
+  if(reduced){
+    el.innerHTML = parts.map(p => p.em ? `<em class="tw-em">${p.text}</em>` : p.text).join('');
+    return;
+  }
+
+  // Build skeleton: a span per part + a caret
+  el.textContent = '';
+  const spans = parts.map(p => {
+    const s = document.createElement(p.em ? 'em' : 'span');
+    if(p.em) s.className = 'tw-em';
+    el.appendChild(s);
+    return s;
+  });
+  const caret = document.createElement('span');
+  caret.className = 'tw-caret';
+  el.appendChild(caret);
+
+  let i = 0; let pi = 0; let ci = 0;
+  const speed = 42;       // ms per character
+  const punctPause = 220; // longer pause after . , — :
+  function step(){
+    if(i >= flat.length){ el.classList.add('is-done'); return; }
+    const part = parts[pi];
+    if(ci < part.text.length){
+      spans[pi].textContent += part.text[ci];
+      const justTyped = part.text[ci];
+      ci++; i++;
+      const wait = /[.,—:;]/.test(justTyped) ? punctPause : speed;
+      setTimeout(step, wait);
+    } else {
+      pi++; ci = 0;
+      step();
+    }
+  }
+  setTimeout(step, 280);
+}
+
+/* -----------------------------------------------------------------
+   COUNTER ANIMATION
+   ----------------------------------------------------------------- */
+function runCounter(el){
+  if(el.classList.contains('is-counted')) return;
+  el.classList.add('is-counted');
+  const to = parseFloat(el.dataset.to) || 0;
+  const suffix = el.dataset.suffix || '';
+  const decimals = parseInt(el.dataset.decimals, 10) || 0;
+  const reduced = matchMedia('(prefers-reduced-motion:reduce)').matches;
+  const format = (v) => v.toLocaleString('en-IN', { minimumFractionDigits:decimals, maximumFractionDigits:decimals }) + suffix;
+  if(reduced){ el.textContent = format(to); return; }
+  const duration = 1600;
+  const start = performance.now();
+  const ease = (t) => 1 - Math.pow(1 - t, 3);
+  function tick(now){
+    const t = Math.min(1, (now - start) / duration);
+    el.textContent = format(to * ease(t));
+    if(t < 1) requestAnimationFrame(tick);
+    else el.textContent = format(to);
+  }
+  requestAnimationFrame(tick);
+}
+
+/* -----------------------------------------------------------------
+   INIT
+   ----------------------------------------------------------------- */
+function init(){
+  renderCategories();
+  renderFeatured();
+  renderCustomChoices();
+  setRoute();
+  updateCartCount();
+  armReveal();
+  updateScrollScenes();
+}
+init();
+
+// Public hook for footer toast
+window.PICO = { toast };
+
+})();
+</script>
+</body>
+</html>
