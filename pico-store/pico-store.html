@@ -1399,7 +1399,7 @@ p{ margin:0; }
             <h2 style="margin-top:18px">Pieces of <em>the Season</em></h2>
           </div>
           <div class="section-head__meta">
-            <p>A curated edit chosen by the head of atelier. Each ready-made piece is one of a small series — never mass-produced.</p>
+            <p>A curated edit chosen by the head of atelier. Each ready-made piece is one of a small series — never mass-produced. Priced from ₹3,500 to ₹18,000.</p>
           </div>
         </div>
         <div class="products reveal" id="featuredProducts"></div>
@@ -1523,9 +1523,7 @@ p{ margin:0; }
             <span class="eyebrow">The Catalogue</span>
             <h2 style="margin-top:18px">Every piece in <em>the house.</em></h2>
           </div>
-          <div class="section-head__meta">
-            <p>A small, intentional range. Filter by silhouette, or browse all.</p>
-          </div>
+          <div class="section-head__meta"></div>
         </div>
         <div class="filters" id="catalogFilters" role="tablist" aria-label="Categories"></div>
         <div class="products" id="catalogProducts"></div>
@@ -2000,7 +1998,7 @@ p{ margin:0; }
                 <div class="product__name">Banaras Bomber</div>
                 <div class="product__cat">Bomber Jacket</div>
               </div>
-              <div class="product__price"><span class="currency">₹</span>48,500</div>
+              <div class="product__price"><span class="currency">₹</span>15,500</div>
             </div>
           </article>
           <article class="product">
@@ -2010,7 +2008,7 @@ p{ margin:0; }
                 <div class="product__name">Patola Sling</div>
                 <div class="product__cat">Sling Bag</div>
               </div>
-              <div class="product__price"><span class="currency">₹</span>22,000</div>
+              <div class="product__price"><span class="currency">₹</span>10,500</div>
             </div>
           </article>
         </div>
@@ -2047,7 +2045,7 @@ p{ margin:0; }
           <img class="brand-mark__img" src="./assets/logo/PICO%20LOGO.png" alt="PICO" width="80" height="72" style="height:72px" onerror="this.classList.add('is-failed')" />
           <span class="brand-mark__logo">PICO</span>
         </div>
-        <p>Heritage textiles, refashioned for a modern wardrobe. Made slowly in Mumbai &amp; sent gently across the world.</p>
+        <p>Heritage textiles, refashioned for a modern wardrobe. Limited drops from ₹3,500 to ₹18,000 — made slowly in Mumbai &amp; sent gently across the world.</p>
         <form class="footer__news" onsubmit="event.preventDefault(); window.PICO.toast('Thank you — first letter on its way.')">
           <input type="email" required placeholder="Your email — for the atelier letter" aria-label="Email" />
           <button type="submit">Subscribe</button>
@@ -2104,73 +2102,73 @@ p{ margin:0; }
    STATE / DATA
    ----------------------------------------------------------------- */
 const PRODUCTS = [
-  { id:'banaras-bomber',    name:'Banaras Bomber',     cat:'Bomber',       category:'Bomber Jacket', price:48500, img:'./assets/logo/bomber-jacket/bomber-1.webp',
+  { id:'banaras-bomber',    name:'Banaras Bomber',     cat:'Bomber',       category:'Bomber Jacket', price:15500, img:'./assets/logo/bomber-jacket/bomber-1.webp',
     copy:'A reversible bomber cut from a 40-year-old Banarasi sari. Mulberry silk lining, brass closures.',
     story:'The original sari was woven in 1984 in Pili Kothi, Banaras — saved for a wedding that didn\'t happen, then folded away.', },
-  { id:'kanjivaram-bomber', name:'Kanjivaram Bomber',  cat:'Bomber',       category:'Bomber Jacket', price:54000, img:'./assets/logo/bomber-jacket/bomber-2.webp',
+  { id:'kanjivaram-bomber', name:'Kanjivaram Bomber',  cat:'Bomber',       category:'Bomber Jacket', price:18000, img:'./assets/logo/bomber-jacket/bomber-2.webp',
     copy:'Deep maroon Kanjivaram with gold zari piping. Tailored, lined in habotai silk.',
     story:'A Kanjivaram drape from a temple town, with gold-zari motifs preserved at the back panel.' },
-  { id:'chanderi-bomber', name:'Chanderi Bomber', cat:'Bomber', category:'Bomber Jacket', price:46000, img:'./assets/logo/bomber-jacket/bomber-3.webp',
+  { id:'chanderi-bomber', name:'Chanderi Bomber', cat:'Bomber', category:'Bomber Jacket', price:12000, img:'./assets/logo/bomber-jacket/bomber-3.webp',
     copy:'A featherweight bomber in pista Chanderi, mulberry silk lining, hand-finished cuffs.',
     story:'Chanderi — woven in 240 threads to the inch — tailored into a jacket that travels like a memory.' },
-  { id:'patola-windsheeter', name:'Patola Windsheeter', cat:'Windsheeter', category:'Windsheeter', price:38000, img:'./assets/logo/wind-sheeter/wind-1.webp',
+  { id:'patola-windsheeter', name:'Patola Windsheeter', cat:'Windsheeter', category:'Windsheeter', price:14000, img:'./assets/logo/wind-sheeter/wind-1.webp',
     copy:'A double-ikat Patola windsheeter for the in-between weather. Fully waterproofed lining.',
     story:'Patola from Patan, where a single sari can take a year to weave. Waterproofed without losing the hand.' },
-  { id:'jamdani-windsheeter', name:'Jamdani Windsheeter', cat:'Windsheeter', category:'Windsheeter', price:34000, img:'./assets/logo/wind-sheeter/wind-2.webp',
+  { id:'jamdani-windsheeter', name:'Jamdani Windsheeter', cat:'Windsheeter', category:'Windsheeter', price:12000, img:'./assets/logo/wind-sheeter/wind-2.webp',
     copy:'Featherweight Jamdani over a technical shell. Travels beautifully.',
     story:'Jamdani — the muslin of Dhaka — re-engineered for a wardrobe that flies.' },
-  { id:'ajrakh-windsheeter', name:'Ajrakh Windsheeter', cat:'Windsheeter', category:'Windsheeter', price:32000, img:'./assets/logo/wind-sheeter/wind-3.webp',
+  { id:'ajrakh-windsheeter', name:'Ajrakh Windsheeter', cat:'Windsheeter', category:'Windsheeter', price:9500, img:'./assets/logo/wind-sheeter/wind-3.webp',
     copy:'A block-print Ajrakh windsheeter in indigo and madder. Waterproofed without losing the hand.',
     story:'Ajrakh from Bhuj — printed in the sun, washed in the river — re-engineered for the road.' },
-  { id:'patola-sling', name:'Patola Sling', cat:'Sling', category:'Sling Bag', price:22000, img:'./assets/logo/sling-bag/sling-1.webp',
+  { id:'patola-sling', name:'Patola Sling', cat:'Sling', category:'Sling Bag', price:10500, img:'./assets/logo/sling-bag/sling-1.webp',
     copy:'Crossbody sling in Patola silk and bridle leather.',
     story:'Patola off-cuts from our atelier floor — never wasted, always honoured.' },
-  { id:'mashru-sling', name:'Mashru Sling', cat:'Sling', category:'Sling Bag', price:19500, img:'./assets/logo/sling-bag/sling-2.webp',
+  { id:'mashru-sling', name:'Mashru Sling', cat:'Sling', category:'Sling Bag', price:7500, img:'./assets/logo/sling-bag/sling-2.webp',
     copy:'A weekend sling cut from striped Mashru silk, brass D-rings.',
     story:'Mashru — once made for those forbidden silk against skin. A textile of clever rebellion.' },
-  { id:'kanjivaram-sling', name:'Kanjivaram Sling', cat:'Sling', category:'Sling Bag', price:24000, img:'./assets/logo/sling-bag/sling-3.webp',
+  { id:'kanjivaram-sling', name:'Kanjivaram Sling', cat:'Sling', category:'Sling Bag', price:12000, img:'./assets/logo/sling-bag/sling-3.webp',
     copy:'A structured crossbody in Kanjivaram silk with bridle leather strap and bone toggle.',
     story:'Kanjivaram woven in Pillaiyar Patti — gold-zari preserved at the flap, the rest a quiet temple-red.' },
-  { id:'chanderi-sling', name:'Chanderi Crossbody', cat:'Sling', category:'Sling Bag', price:21000, img:'./assets/logo/sling-bag/sling-4.webp',
+  { id:'chanderi-sling', name:'Chanderi Crossbody', cat:'Sling', category:'Sling Bag', price:9000, img:'./assets/logo/sling-bag/sling-4.webp',
     copy:'A featherweight crossbody in pista Chanderi, mulberry silk lining, bone clasp.',
     story:'Chanderi — light as a whisper, finished to last a generation.' },
-  { id:'banaras-clutch', name:'Banaras Evening Clutch', cat:'Clutch', category:'Clutch', price:18000, img:'./assets/logo/clutch/clutch-1.webp',
+  { id:'banaras-clutch', name:'Banaras Evening Clutch', cat:'Clutch', category:'Clutch', price:10500, img:'./assets/logo/clutch/clutch-1.webp',
     copy:'A slim evening clutch, lined in habotai. For long dinners and longer conversations.',
     story:'A length of Banarasi brocade, folded into a quiet evening piece.' },
-  { id:'ajrakh-clutch', name:'Ajrakh Day Clutch', cat:'Clutch', category:'Clutch', price:14500, img:'./assets/logo/clutch/clutch-2.webp',
+  { id:'ajrakh-clutch', name:'Ajrakh Day Clutch', cat:'Clutch', category:'Clutch', price:6500, img:'./assets/logo/clutch/clutch-2.webp',
     copy:'Block-printed Ajrakh, hand-finished, brass kiss-lock.',
     story:'Ajrakh from Bhuj — printed in indigo and madder, fixed by sun.' },
-  { id:'mashru-clutch', name:'Mashru Heritage Clutch', cat:'Clutch', category:'Clutch', price:16500, img:'./assets/logo/clutch/clutch-3.webp',
+  { id:'mashru-clutch', name:'Mashru Heritage Clutch', cat:'Clutch', category:'Clutch', price:8500, img:'./assets/logo/clutch/clutch-3.webp',
     copy:'A long-line clutch in striped Mashru, brass kiss-lock, hand-rolled edges.',
     story:'Mashru — the textile of clever rebellion — folded into something quietly modern.' },
-  { id:'chanderi-wallet', name:'Chanderi Bi-fold Wallet', cat:'Wallet', category:'Wallet', price:9500, img:'./assets/logo/wallet/wallet-1.webp',
+  { id:'chanderi-wallet', name:'Chanderi Bi-fold Wallet', cat:'Wallet', category:'Wallet', price:6500, img:'./assets/logo/wallet/wallet-1.webp',
     copy:'Lightweight wallet in Chanderi silk, six card slots, lined in bridle leather.',
     story:'Chanderi — light as a whisper, finished in leather strong as a handshake.' },
-  { id:'leather-wallet', name:'Atelier Card Holder', cat:'Wallet', category:'Wallet', price:6800, img:'./assets/logo/wallet/wallet-2.webp',
+  { id:'leather-wallet', name:'Atelier Card Holder', cat:'Wallet', category:'Wallet', price:4000, img:'./assets/logo/wallet/wallet-2.webp',
     copy:'Slim card holder, hand-stitched bridle, Mashru lining.',
     story:'A card holder built from bridle leather and a length of Mashru silk.' },
-  { id:'silk-tie', name:'Banaras Silk Tie', cat:'Tie', category:'Neck Tie', price:6500, img:'./assets/logo/tie/tie-1.webp',
+  { id:'silk-tie', name:'Banaras Silk Tie', cat:'Tie', category:'Neck Tie', price:4800, img:'./assets/logo/tie/tie-1.webp',
     copy:'A 7-fold tie cut from Banarasi silk. Tipped, hand-rolled.',
     story:'Cut from a single panel of Banarasi silk — a pattern that wraps once and stays a lifetime.' },
-  { id:'patola-tie', name:'Patola Silk Tie', cat:'Tie', category:'Neck Tie', price:7200, img:'./assets/logo/tie/tie-2.webp',
+  { id:'patola-tie', name:'Patola Silk Tie', cat:'Tie', category:'Neck Tie', price:5500, img:'./assets/logo/tie/tie-2.webp',
     copy:'Slim Patola tie, double-ikat, hand-finished tip.',
     story:'A small canvas of Patola — geometric, deliberate, unmistakable.' },
-  { id:'kanjivaram-tie', name:'Kanjivaram Silk Tie', cat:'Tie', category:'Neck Tie', price:6800, img:'./assets/logo/tie/tie-3.webp',
+  { id:'kanjivaram-tie', name:'Kanjivaram Silk Tie', cat:'Tie', category:'Neck Tie', price:4200, img:'./assets/logo/tie/tie-3.webp',
     copy:'A 7-fold tie cut from temple-red Kanjivaram, hand-rolled tip, gold zari at the keeper.',
     story:'Kanjivaram from Pillaiyar Patti — woven for a wedding in 2003, kept folded in muslin until now.' },
-  { id:'chanderi-tie', name:'Chanderi Silk Tie',    cat:'Tie', category:'Neck Tie', price:5800, img:'./assets/logo/tie/tie-4.webp',
+  { id:'chanderi-tie', name:'Chanderi Silk Tie',    cat:'Tie', category:'Neck Tie', price:3500, img:'./assets/logo/tie/tie-4.webp',
     copy:'A featherweight tie in pale Chanderi, hand-tipped, finished in habotai.',
     story:'Chanderi — light as a whisper — folded into a tie that wears like a second skin.' },
-  { id:'banaras-tote', name:'Banaras Heritage Tote', cat:'Tote', category:'Tote', price:24500, img:'./assets/logo/tote/tote-2.webp',
+  { id:'banaras-tote', name:'Banaras Heritage Tote', cat:'Tote', category:'Tote', price:12000, img:'./assets/logo/tote/tote-2.webp',
     copy:'A roomy day tote in Banarasi brocade, lined in habotai with bridle leather handles.',
     story:'Cut from a deep-burgundy Banarasi sari woven for a wedding in 1979 — preserved at the borders, made for a Tuesday.' },
-  { id:'patola-tote',  name:'Patola Day Tote',       cat:'Tote', category:'Tote', price:21000, img:'./assets/logo/tote/tote-3.webp',
+  { id:'patola-tote',  name:'Patola Day Tote',       cat:'Tote', category:'Tote', price:9000,  img:'./assets/logo/tote/tote-3.webp',
     copy:'A structured tote with double-ikat Patola panels, bone toggle, mulberry silk lining.',
     story:'Patola — the only sari in the world woven identically on both sides — made into a tote that asks no questions.' },
-  { id:'jamdani-tote', name:'Jamdani Soft Tote',     cat:'Tote', category:'Tote', price:19500, img:'./assets/logo/tote/tote-7.webp',
+  { id:'jamdani-tote', name:'Jamdani Soft Tote',     cat:'Tote', category:'Tote', price:7500,  img:'./assets/logo/tote/tote-7.webp',
     copy:'An unstructured everyday tote in pale Jamdani, leather base, magnetic close.',
     story:'Dhaka Jamdani — the muslin once known as woven air — made into a bag that disappears into the day.' },
-  { id:'mashru-tote',  name:'Mashru Weekend Tote',   cat:'Tote', category:'Tote', price:22500, img:'./assets/logo/tote/tote-8.webp',
+  { id:'mashru-tote',  name:'Mashru Weekend Tote',   cat:'Tote', category:'Tote', price:10500, img:'./assets/logo/tote/tote-8.webp',
     copy:'A generous weekender in striped Mashru, full bridle leather trim, brass feet.',
     story:'Built for the long Friday — Mashru on the outside, mulberry silk within.' },
 ];
